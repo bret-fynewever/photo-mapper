@@ -3,14 +3,17 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="PhotoMap.cs">
     <Files>
       <File FileName="MainActivity.cs" Line="30" Column="5" />
-      <File FileName="PhotoMap.cs" Line="91" Column="19" />
+      <File FileName="PhotoMap.cs" Line="115" Column="61" />
       <File FileName="Core/LocationService.cs" Line="54" Column="1" />
+      <File FileName="Resources/values/Strings.xml" Line="13" Column="22" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="PhotoMapper" expanded="True">
+            <Node name="Assets" expanded="True" />
             <Node name="Core" expanded="True" />
+            <Node name="Properties" expanded="True" />
             <Node name="Resources" expanded="True">
               <Node name="layout" expanded="True" />
               <Node name="values" expanded="True" />

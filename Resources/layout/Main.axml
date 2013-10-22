@@ -5,12 +5,12 @@
     android:layout_height="match_parent">
     <Button
         android:id="@+id/ShowMapButton"
-        android:text="@string/show_map_button"
+        android:text="@string/ShowMapButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <Button
         android:id="@+id/MapImageButton"
-        android:text="@string/map_image_button"
+        android:text="@string/MapImageButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

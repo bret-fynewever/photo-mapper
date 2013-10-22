@@ -300,14 +300,38 @@ namespace PhotoMapper
 		public partial class String
 		{
 			
+			// aapt resource value: 0x7f060021
+			public const int AddressNotFoundMessage = 2131099681;
+			
+			// aapt resource value: 0x7f060020
+			public const int AddressNotFoundTitle = 2131099680;
+			
 			// aapt resource value: 0x7f06001f
-			public const int address_search_message = 2131099679;
+			public const int AddressSearchMessage = 2131099679;
 			
 			// aapt resource value: 0x7f06001e
-			public const int address_search_title = 2131099678;
+			public const int AddressSearchTitle = 2131099678;
 			
 			// aapt resource value: 0x7f060019
-			public const int app_name = 2131099673;
+			public const int AppName = 2131099673;
+			
+			// aapt resource value: 0x7f060023
+			public const int Cancel = 2131099683;
+			
+			// aapt resource value: 0x7f06001d
+			public const int GotoAddressButton = 2131099677;
+			
+			// aapt resource value: 0x7f06001c
+			public const int GotoMinneapolisButton = 2131099676;
+			
+			// aapt resource value: 0x7f06001b
+			public const int MapImageButton = 2131099675;
+			
+			// aapt resource value: 0x7f060022
+			public const int Okay = 2131099682;
+			
+			// aapt resource value: 0x7f06001a
+			public const int ShowMapButton = 2131099674;
 			
 			// aapt resource value: 0x7f060014
 			public const int auth_client_needs_enabling_title = 2131099668;
@@ -326,9 +350,6 @@ namespace PhotoMapper
 			
 			// aapt resource value: 0x7f060013
 			public const int auth_client_using_bad_version_title = 2131099667;
-			
-			// aapt resource value: 0x7f060021
-			public const int cancel = 2131099681;
 			
 			// aapt resource value: 0x7f060006
 			public const int common_google_play_services_enable_button = 2131099654;
@@ -386,21 +407,6 @@ namespace PhotoMapper
 			
 			// aapt resource value: 0x7f060012
 			public const int common_signin_button_text_long = 2131099666;
-			
-			// aapt resource value: 0x7f06001d
-			public const int goto_address_button = 2131099677;
-			
-			// aapt resource value: 0x7f06001c
-			public const int goto_minneapolis_button = 2131099676;
-			
-			// aapt resource value: 0x7f06001b
-			public const int map_image_button = 2131099675;
-			
-			// aapt resource value: 0x7f060020
-			public const int okay = 2131099680;
-			
-			// aapt resource value: 0x7f06001a
-			public const int show_map_button = 2131099674;
 			
 			static String()
 			{

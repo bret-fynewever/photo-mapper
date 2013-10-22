@@ -86,17 +86,17 @@ namespace PhotoMapper
 
 		private void GoToAddress()
 		{
-			EditText inputControl = new EditText(this);
+			var inputControl = new EditText(this);
 
 			new AlertDialog.Builder(this)
-				.SetTitle(Resource.String.address_search_title)
-				.SetMessage(Resource.String.address_search_message)
+				.SetTitle(Resource.String.AddressSearchTitle)
+				.SetMessage(Resource.String.AddressSearchMessage)
 				.SetView(inputControl)
-				.SetPositiveButton(Resource.String.okay, (object sender, DialogClickEventArgs e) =>
+				.SetPositiveButton(Resource.String.Okay, (object sender, DialogClickEventArgs e) =>
 				{
 					ZoomToAddress(GetMapFromFragment(Resource.Id.PhotoMapFragment), inputControl.Text, 15);
 				})
-				.SetNegativeButton(Resource.String.cancel, (object sender, DialogClickEventArgs e) =>
+				.SetNegativeButton(Resource.String.Cancel, (object sender, DialogClickEventArgs e) =>
 				{
 				})
 				.Show();
@@ -112,11 +112,15 @@ namespace PhotoMapper
 				{
 					var location = new LatLng(address.Latitude, address.Longitude);
 					ZoomToLocation(map, location, zoom);
-					SetMarker(map, location, address.GetAddressLine(0));
+					SetMarker(map, location, address.GetAddressLine(0) + " " + address.GetAddressLine(1));
 				}
-				else
+				else // Location not found...
 				{
-					// TODO:  Location not found...
+					new AlertDialog.Builder(this)
+						.SetTitle(Resource.String.AddressNotFoundTitle)
+						.SetMessage(Resource.String.AddressNotFoundMessage)
+						.SetPositiveButton(Resource.String.Okay, (object sender, DialogClickEventArgs e) => {})
+						.Show();
 				}
 			}
 		}

@@ -5,12 +5,12 @@
     android:layout_height="match_parent">
     <Button
         android:id="@+id/GoToMinneapolisButton"
-        android:text="@string/goto_minneapolis_button"
+        android:text="@string/GotoMinneapolisButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <Button
         android:id="@+id/GoToAddressButton"
-        android:text="@string/goto_address_button"
+        android:text="@string/GotoAddressButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <fragment
