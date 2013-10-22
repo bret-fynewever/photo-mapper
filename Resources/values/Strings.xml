@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">PhotoMapper</string>
+	<string name="show_map_button">Show Map</string>
+	<string name="map_image_button">Map Image</string>
+	<string name="goto_minneapolis_button">Go to Minneapolis</string>
+	<string name="goto_address_button">Go to Address</string>
+	<string name="address_search_title">Search for Address</string>
+	<string name="address_search_message">Enter Address, City, State, or Zip</string>
+	<string name="okay">OK</string>
+	<string name="cancel">Cancel</string>
+</resources>
