@@ -18,6 +18,13 @@ namespace PhotoMapper
 	[Activity(Label = "PhotoMap")]			
 	public class PhotoMap : Activity
 	{
+		private IGeoLocationService _geoLocationService;
+		public IGeoLocationService GeoLocationService
+		{
+			get { return _geoLocationService ?? (_geoLocationService = new GeoLocationService(this)); }
+			set { _geoLocationService = value; }
+		}
+
 		protected override void OnCreate(Bundle bundle)
 		{
 			base.OnCreate(bundle);
@@ -106,8 +113,7 @@ namespace PhotoMapper
 		{
 			if (map != null && !string.IsNullOrWhiteSpace(searchAddress))
 			{
-				var locationService = new LocationService(this);
-				Address address = await locationService.GeoSearchAsync(searchAddress);
+				Address address = await GeoLocationService.GeoSearchAsync(searchAddress);
 				if (address != null)
 				{
 					var location = new LatLng(address.Latitude, address.Longitude);

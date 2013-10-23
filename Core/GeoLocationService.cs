@@ -13,11 +13,11 @@ using Android.Locations;
 
 namespace PhotoMapper.Core
 {
-	public class LocationService
+	public class GeoLocationService : IGeoLocationService
 	{
 		private Context _context;
 
-		public LocationService(Context context)
+		public GeoLocationService(Context context)
 		{
 			_context = context;
 		}
@@ -28,13 +28,6 @@ namespace PhotoMapper.Core
 			return geocoder.GetFromLocationName(searchAddress, maxResults);
 		}
 
-		public async Task<IList<Address>> GeoSearchAsync(string searchAddress, int maxResults)
-		{
-			Geocoder geocoder = new Geocoder(_context);
-			IList<Address> addresses = await geocoder.GetFromLocationNameAsync(searchAddress, maxResults);
-			return addresses;
-		}
-
 		public Address GeoSearch(string searchAddress)
 		{
 			IList<Address> addresses = GeoSearch(searchAddress, 1);
@@ -42,6 +35,13 @@ namespace PhotoMapper.Core
 				return addresses[0];
 
 			return null;
+		}
+
+		public async Task<IList<Address>> GeoSearchAsync(string searchAddress, int maxResults)
+		{
+			Geocoder geocoder = new Geocoder(_context);
+			IList<Address> addresses = await geocoder.GetFromLocationNameAsync(searchAddress, maxResults);
+			return addresses;
 		}
 
 		public async Task<Address> GeoSearchAsync(string searchAddress)
