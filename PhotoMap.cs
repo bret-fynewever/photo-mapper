@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -10,14 +12,20 @@ using Android.Views;
 using Android.Widget;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
-using PhotoMapper.Core;
 using Android.Locations;
+using Android.Media;
+using Xamarin.Media;
+using PhotoMapper.Core;
+using Android.Database;
 
 namespace PhotoMapper
 {
 	[Activity(Label = "PhotoMap")]			
 	public class PhotoMap : Activity
 	{
+		private const int ZoomLevel = 15;
+		private const int SelectImageCode = 1000;
+
 		private IGeoLocationService _geoLocationService;
 		public IGeoLocationService GeoLocationService
 		{
@@ -47,7 +55,7 @@ namespace PhotoMapper
 				goToMinneapolisButton.Click += (object sender, EventArgs e) =>
 				{
 					var location = new LatLng(44.9833, -93.2667);   // Minneapolis latitude / longitude
-					ZoomToLocation(map, location, 15);
+					ZoomToLocation(map, location, ZoomLevel);
 					SetMarker(map, location, "Downtown Minneapolis");
 				};
 
@@ -56,6 +64,43 @@ namespace PhotoMapper
 				{
 					GoToAddress();
 				};
+				
+				Button mapImageButton = FindViewById<Button>(Resource.Id.MapImageButton);
+				mapImageButton.Click += delegate
+				{
+					var picker = new MediaPicker(this);
+					if (!picker.PhotosSupported)
+					{
+						DisplayMessage(Resource.String.NoDeviceImageSupportTitle, Resource.String.NoDeviceImageSupportMessage);
+						return;
+					}
+
+					var imageIntent = new Intent();
+					imageIntent.SetType("image/*");
+					imageIntent.SetAction(Intent.ActionGetContent);
+					StartActivityForResult(Intent.CreateChooser(imageIntent, "Select Image"), SelectImageCode);
+				};
+			}
+		}
+
+		protected override void OnActivityResult(int requestCode, Result resultCode, Intent intent)
+		{
+			base.OnActivityResult(requestCode, resultCode, intent);
+
+			if (resultCode == Result.Canceled || intent == null)
+				return;
+
+			GoogleMap map = GetMapFromFragment(Resource.Id.PhotoMapFragment);
+			if (map == null)
+				return;
+
+			switch (requestCode)
+			{
+				case SelectImageCode:
+					MapImage(map, GetPathToImage(intent.Data), ZoomLevel);
+					break;
+				default:
+					break;
 			}
 		}
 
@@ -101,7 +146,7 @@ namespace PhotoMapper
 				.SetView(inputControl)
 				.SetPositiveButton(Resource.String.Okay, (object sender, DialogClickEventArgs e) =>
 				{
-					ZoomToAddress(GetMapFromFragment(Resource.Id.PhotoMapFragment), inputControl.Text, 15);
+					ZoomToAddress(GetMapFromFragment(Resource.Id.PhotoMapFragment), inputControl.Text, ZoomLevel);
 				})
 				.SetNegativeButton(Resource.String.Cancel, (object sender, DialogClickEventArgs e) =>
 				{
@@ -122,13 +167,68 @@ namespace PhotoMapper
 				}
 				else // Location not found...
 				{
-					new AlertDialog.Builder(this)
-						.SetTitle(Resource.String.AddressNotFoundTitle)
-						.SetMessage(Resource.String.AddressNotFoundMessage)
-						.SetPositiveButton(Resource.String.Okay, (object sender, DialogClickEventArgs e) => {})
-						.Show();
+					DisplayMessage(Resource.String.AddressNotFoundTitle, Resource.String.AddressNotFoundMessage);
 				}
 			}
+		}
+
+		private void MapImage(GoogleMap map, string path, float zoom)
+		{
+			try
+			{
+				LatLng location = GetImageLocation(path);
+				if (location != null)
+				{
+					ZoomToLocation(map, location, zoom);
+					SetMarker(map, location, Path.GetFileName(path));
+				}
+				else // No EXIF geo data present in image...
+				{
+					DisplayMessage(Resource.String.NoExifGeoDataInImageTitle, Resource.String.NoExifGeoDataInImageMessage);
+				}
+			}
+			catch (IOException)
+			{
+				// TODO:  handle IO error.
+			}
+		}
+
+		private string GetPathToImage(Android.Net.Uri uri)
+		{
+			string path = null;
+			// The projection contains the columns we want to return in our query.
+			string[] projection = new[] { Android.Provider.MediaStore.Images.Media.InterfaceConsts.Data };
+			using (ICursor cursor = ManagedQuery(uri, projection, null, null, null))
+			{
+				if (cursor != null)
+				{
+					int columnIndex = cursor.GetColumnIndexOrThrow(Android.Provider.MediaStore.Images.Media.InterfaceConsts.Data);
+					cursor.MoveToFirst();
+					path = cursor.GetString(columnIndex);
+				}
+			}
+			return path;
+		}
+
+		private LatLng GetImageLocation(string imagePath)
+		{
+			LatLng location = null;
+
+			var exif = new ExifInterface(imagePath);
+			float[] latLong = new float[2];
+			if (exif.GetLatLong(latLong))
+				location = new LatLng(latLong[0], latLong[1]);
+
+			return location;
+		}
+
+		private void DisplayMessage(int title, int message)
+		{
+			new AlertDialog.Builder(this)
+				.SetTitle(title)
+				.SetMessage(message)
+				.SetPositiveButton(Resource.String.Okay, (object sender, DialogClickEventArgs e) => { })
+				.Show();
 		}
 	}
 }

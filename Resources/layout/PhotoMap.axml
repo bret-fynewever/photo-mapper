@@ -3,14 +3,24 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <Button
-        android:id="@+id/GoToMinneapolisButton"
-        android:text="@string/GotoMinneapolisButton"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/GoToMinneapolisButton"
+            android:text="@string/GotoMinneapolisButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/GoToAddressButton"
+            android:text="@string/GotoAddressButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
     <Button
-        android:id="@+id/GoToAddressButton"
-        android:text="@string/GotoAddressButton"
+        android:id="@+id/MapImageButton"
+        android:text="@string/MapImageButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <fragment

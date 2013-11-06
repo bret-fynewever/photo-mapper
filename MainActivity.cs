@@ -24,11 +24,6 @@ namespace PhotoMapper
 			{
 				StartActivity(typeof(PhotoMap));
 			};
-
-			Button mapImageButton = FindViewById<Button>(Resource.Id.MapImageButton);
-			mapImageButton.Click += delegate
-			{
-			};
 		}
 	}
 }

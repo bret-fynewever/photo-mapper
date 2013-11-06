@@ -238,14 +238,14 @@ namespace PhotoMapper
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f050008
-			public const int GoToAddressButton = 2131034120;
-			
 			// aapt resource value: 0x7f050007
-			public const int GoToMinneapolisButton = 2131034119;
+			public const int GoToAddressButton = 2131034119;
 			
 			// aapt resource value: 0x7f050006
-			public const int MapImageButton = 2131034118;
+			public const int GoToMinneapolisButton = 2131034118;
+			
+			// aapt resource value: 0x7f050008
+			public const int MapImageButton = 2131034120;
 			
 			// aapt resource value: 0x7f050009
 			public const int PhotoMapFragment = 2131034121;
@@ -315,8 +315,8 @@ namespace PhotoMapper
 			// aapt resource value: 0x7f060019
 			public const int AppName = 2131099673;
 			
-			// aapt resource value: 0x7f060023
-			public const int Cancel = 2131099683;
+			// aapt resource value: 0x7f060027
+			public const int Cancel = 2131099687;
 			
 			// aapt resource value: 0x7f06001d
 			public const int GotoAddressButton = 2131099677;
@@ -327,8 +327,20 @@ namespace PhotoMapper
 			// aapt resource value: 0x7f06001b
 			public const int MapImageButton = 2131099675;
 			
+			// aapt resource value: 0x7f060025
+			public const int NoDeviceImageSupportMessage = 2131099685;
+			
+			// aapt resource value: 0x7f060024
+			public const int NoDeviceImageSupportTitle = 2131099684;
+			
+			// aapt resource value: 0x7f060023
+			public const int NoExifGeoDataInImageMessage = 2131099683;
+			
 			// aapt resource value: 0x7f060022
-			public const int Okay = 2131099682;
+			public const int NoExifGeoDataInImageTitle = 2131099682;
+			
+			// aapt resource value: 0x7f060026
+			public const int Okay = 2131099686;
 			
 			// aapt resource value: 0x7f06001a
 			public const int ShowMapButton = 2131099674;
