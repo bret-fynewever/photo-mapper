@@ -56,8 +56,12 @@
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PhotoMap.cs" />
-    <Compile Include="Core\IGeoLocationService.cs" />
-    <Compile Include="Core\GeoLocationService.cs" />
+    <Compile Include="Core\Extension\ActivityExtension.cs" />
+    <Compile Include="Core\Service\IGeoLocationService.cs" />
+    <Compile Include="Core\Service\GeoLocationService.cs" />
+    <Compile Include="Core\Service\IImageService.cs" />
+    <Compile Include="Core\Service\ImageService.cs" />
+    <Compile Include="Core\Extension\MapExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -83,5 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />
+    <Folder Include="Core\Extension\" />
+    <Folder Include="Core\Service\" />
   </ItemGroup>
 </Project>

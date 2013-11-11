@@ -11,6 +11,7 @@
 	<string name="AddressNotFoundMessage">No matching addresses were located.</string>
 	<string name="NoExifGeoDataInImageTitle">Image Location Not Found</string>
 	<string name="NoExifGeoDataInImageMessage">The image does not contain geo data.</string>
+	<string name="NoExifGeoDataInImagePrompt">The image does not contain geo data. Set the location?</string>
 	<string name="NoDeviceImageSupportTitle">Photos Not Supported</string>
 	<string name="NoDeviceImageSupportMessage">The device does not support photos.</string>
 	<string name="Okay">OK</string>

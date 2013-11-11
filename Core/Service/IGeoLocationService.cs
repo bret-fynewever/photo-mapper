@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace PhotoMapper.Core
+namespace PhotoMapper.Core.Service
 {
 	public interface IGeoLocationService
 	{

@@ -11,7 +11,7 @@ using Android.Views;
 using Android.Widget;
 using Android.Locations;
 
-namespace PhotoMapper.Core
+namespace PhotoMapper.Core.Service
 {
 	public class GeoLocationService : IGeoLocationService
 	{
@@ -24,12 +24,18 @@ namespace PhotoMapper.Core
 
 		public IList<Address> GeoSearch(string searchAddress, int maxResults)
 		{
+			if (string.IsNullOrWhiteSpace(searchAddress))
+				throw new ArgumentNullException("searchAddress");
+
 			Geocoder geocoder = new Geocoder(_context);
 			return geocoder.GetFromLocationName(searchAddress, maxResults);
 		}
 
 		public Address GeoSearch(string searchAddress)
 		{
+			if (string.IsNullOrWhiteSpace(searchAddress))
+				throw new ArgumentNullException("searchAddress");
+
 			IList<Address> addresses = GeoSearch(searchAddress, 1);
 			if (addresses != null && addresses.Count > 0)
 				return addresses[0];
@@ -39,6 +45,9 @@ namespace PhotoMapper.Core
 
 		public async Task<IList<Address>> GeoSearchAsync(string searchAddress, int maxResults)
 		{
+			if (string.IsNullOrWhiteSpace(searchAddress))
+				throw new ArgumentNullException("searchAddress");
+
 			Geocoder geocoder = new Geocoder(_context);
 			IList<Address> addresses = await geocoder.GetFromLocationNameAsync(searchAddress, maxResults);
 			return addresses;
@@ -46,6 +55,9 @@ namespace PhotoMapper.Core
 
 		public async Task<Address> GeoSearchAsync(string searchAddress)
 		{
+			if (string.IsNullOrWhiteSpace(searchAddress))
+				throw new ArgumentNullException("searchAddress");
+
 			IList<Address> addresses = await GeoSearchAsync(searchAddress, 1);
 			if (addresses != null && addresses.Count > 0)
 				return addresses[0];
