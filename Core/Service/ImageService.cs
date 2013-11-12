@@ -9,7 +9,7 @@ namespace PhotoMapper.Core.Service
 {
 	public class ImageService : IImageService
 	{
-		private Activity _activity;
+		private Activity _activity = null;
 
 		public ImageService(Activity activity)
 		{

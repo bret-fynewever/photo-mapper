@@ -17,7 +17,7 @@ namespace PhotoMapper.Core.Service
 {
 	public class GeoLocationService : IGeoLocationService
 	{
-		private Context _context;
+		private Context _context = null;
 
 		public GeoLocationService(Context context)
 		{
@@ -29,7 +29,7 @@ namespace PhotoMapper.Core.Service
 
 		#region GeoSearch
 
-		private Geocoder _geocoder;
+		private Geocoder _geocoder = null;
 		protected Geocoder Geocoder
 		{
 			get { return _geocoder ?? (_geocoder = new Geocoder(_context)); }
@@ -80,7 +80,7 @@ namespace PhotoMapper.Core.Service
 
 		#region GeoLocate
 
-		private Geolocator _geolocator;
+		private Geolocator _geolocator = null;
 		protected Geolocator Geolocator
 		{
 			get { return _geolocator ?? (_geolocator = new Geolocator(_context) { DesiredAccuracy = GeoAccuracy }); }
