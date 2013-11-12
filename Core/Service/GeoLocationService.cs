@@ -10,6 +10,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Locations;
+using Android.Gms.Maps.Model;
+using Xamarin.Geolocation;
 
 namespace PhotoMapper.Core.Service
 {
@@ -19,7 +21,18 @@ namespace PhotoMapper.Core.Service
 
 		public GeoLocationService(Context context)
 		{
+			if (context == null)
+				throw new ArgumentNullException("context");
+
 			_context = context;
+		}
+
+		#region GeoSearch
+
+		private Geocoder _geocoder;
+		protected Geocoder Geocoder
+		{
+			get { return _geocoder ?? (_geocoder = new Geocoder(_context)); }
 		}
 
 		public IList<Address> GeoSearch(string searchAddress, int maxResults)
@@ -27,8 +40,7 @@ namespace PhotoMapper.Core.Service
 			if (string.IsNullOrWhiteSpace(searchAddress))
 				throw new ArgumentNullException("searchAddress");
 
-			Geocoder geocoder = new Geocoder(_context);
-			return geocoder.GetFromLocationName(searchAddress, maxResults);
+			return Geocoder.GetFromLocationName(searchAddress, maxResults);
 		}
 
 		public Address GeoSearch(string searchAddress)
@@ -37,8 +49,8 @@ namespace PhotoMapper.Core.Service
 				throw new ArgumentNullException("searchAddress");
 
 			IList<Address> addresses = GeoSearch(searchAddress, 1);
-			if (addresses != null && addresses.Count > 0)
-				return addresses[0];
+			if (addresses != null)
+				return addresses.FirstOrDefault();
 
 			return null;
 		}
@@ -48,8 +60,7 @@ namespace PhotoMapper.Core.Service
 			if (string.IsNullOrWhiteSpace(searchAddress))
 				throw new ArgumentNullException("searchAddress");
 
-			Geocoder geocoder = new Geocoder(_context);
-			IList<Address> addresses = await geocoder.GetFromLocationNameAsync(searchAddress, maxResults);
+			IList<Address> addresses = await Geocoder.GetFromLocationNameAsync(searchAddress, maxResults);
 			return addresses;
 		}
 
@@ -59,11 +70,52 @@ namespace PhotoMapper.Core.Service
 				throw new ArgumentNullException("searchAddress");
 
 			IList<Address> addresses = await GeoSearchAsync(searchAddress, 1);
-			if (addresses != null && addresses.Count > 0)
-				return addresses[0];
+			if (addresses != null)
+				return addresses.FirstOrDefault();
 
 			return null;
 		}
+
+		#endregion
+
+		#region GeoLocate
+
+		private Geolocator _geolocator;
+		protected Geolocator Geolocator
+		{
+			get { return _geolocator ?? (_geolocator = new Geolocator(_context) { DesiredAccuracy = GeoAccuracy }); }
+		}
+
+		private double _geoAccuracy = 50;
+		public double GeoAccuracy
+		{
+			get { return _geoAccuracy; }
+			set
+			{
+				_geoAccuracy = value;
+				Geolocator.DesiredAccuracy = value;
+			}
+		}
+
+		public bool IsGeolocationEnabled
+		{
+			get { return Geolocator.IsGeolocationEnabled; }
+		}
+
+		public async Task<LatLng> GetCurrentLocationAsync()
+		{
+			LatLng location = null;
+
+			if (Geolocator.IsGeolocationEnabled)
+			{
+				Position position = await Geolocator.GetPositionAsync(timeout: 10000);
+				location = position == null ? null : new LatLng(position.Latitude, position.Longitude);
+			}
+
+			return location;
+		}
+
+		#endregion
 	}
 }
 

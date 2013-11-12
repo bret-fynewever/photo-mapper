@@ -15,6 +15,7 @@ using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.Locations;
 using Android.Media;
+using Xamarin.Geolocation;
 using Xamarin.Media;
 using PhotoMapper.Core.Service;
 using PhotoMapper.Core.Extension;
@@ -26,8 +27,10 @@ namespace PhotoMapper
 	{
 		private const int ZoomLevel = 15;
 		private const int SelectImageCode = 1000;
-		private IGeoLocationService _geoLocationService;
 
+		#region Services
+
+		private IGeoLocationService _geoLocationService;
 		public IGeoLocationService GeoLocationService
 		{
 			get { return _geoLocationService ?? (_geoLocationService = new GeoLocationService(this)); }
@@ -35,12 +38,13 @@ namespace PhotoMapper
 		}
 
 		private IImageService _imageService;
-
 		public IImageService ImageService
 		{
 			get { return _imageService ?? (_imageService = new ImageService(this)); }
 			set { _imageService = value; }
 		}
+
+		#endregion
 
 		#region Overrides
 
@@ -206,12 +210,7 @@ namespace PhotoMapper
 					.SetMessage(Resource.String.NoExifGeoDataInImagePrompt)
 					.SetPositiveButton(Resource.String.Okay, (object sender, DialogClickEventArgs e) =>
 					{
-						LatLng currentLocation = GetCurrentLocation();
-						if (currentLocation != null)
-						{
-							map.ZoomToLocation(currentLocation, zoom);
-							map.SetMovableMarker(currentLocation, Path.GetFileName(imagePath), MarkerDragEndHandler);
-						}
+						PlaceMovableImageMarker(map, imagePath, zoom);
 					})
 					.SetNegativeButton(Resource.String.Cancel, (object sender, DialogClickEventArgs e) =>
 					{
@@ -220,14 +219,21 @@ namespace PhotoMapper
 			}
 		}
 
-		private LatLng GetCurrentLocation()
+		private async void PlaceMovableImageMarker(GoogleMap map, string imagePath, float zoom)
 		{
-			LocationManager locationManager = GetSystemService(Context.LocationService) as LocationManager;
-
-			// TODO
-
-			LatLng location = null;
-			return location;
+			if (GeoLocationService.IsGeolocationEnabled)
+			{
+				LatLng currentLocation = await GeoLocationService.GetCurrentLocationAsync();
+				if (currentLocation != null)
+				{
+					map.ZoomToLocation(currentLocation, zoom);
+					map.SetMovableMarker(currentLocation, Path.GetFileName(imagePath), MarkerDragEndHandler);
+				}
+			}
+			else
+			{
+				this.DisplayMessage(Resource.String.NoGeoEnabledTitle, Resource.String.NoGeoEnabledMessage);
+			}
 		}
 
 		private void MarkerDragEndHandler(object sender, GoogleMap.MarkerDragEndEventArgs e)

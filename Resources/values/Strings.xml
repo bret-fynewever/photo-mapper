@@ -14,6 +14,8 @@
 	<string name="NoExifGeoDataInImagePrompt">The image does not contain geo data. Set the location?</string>
 	<string name="NoDeviceImageSupportTitle">Photos Not Supported</string>
 	<string name="NoDeviceImageSupportMessage">The device does not support photos.</string>
+	<string name="NoGeoEnabledTitle">Geolocation Not Enabled</string>
+	<string name="NoGeoEnabledMessage">Enable device geolocation to use this feature.</string>
 	<string name="Okay">OK</string>
 	<string name="Cancel">Cancel</string>
 </resources>
