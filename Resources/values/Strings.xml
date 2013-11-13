@@ -17,6 +17,8 @@
 	<string name="NoDeviceImageSupportMessage">The device does not support photos.</string>
 	<string name="NoGeoEnabledTitle">Geolocation Not Enabled</string>
 	<string name="NoGeoEnabledMessage">Enable device geolocation to use this feature.</string>
+	<string name="SetImageLocationFailedTitle">Error</string>
+	<string name="SetImageLocationFailedMessage">Failed to update image with location.</string>
 	<string name="Okay">OK</string>
 	<string name="Cancel">Cancel</string>
 </resources>

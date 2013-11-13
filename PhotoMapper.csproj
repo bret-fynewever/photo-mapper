@@ -62,6 +62,7 @@
     <Compile Include="Core\Service\IImageService.cs" />
     <Compile Include="Core\Service\ImageService.cs" />
     <Compile Include="Core\Extension\MapExtension.cs" />
+    <Compile Include="Core\Extension\DoubleExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

@@ -1,9 +1,10 @@
 using System;
+using System.IO;
 using Android.App;
 using Android.Gms.Maps.Model;
 using Android.Database;
 using Android.Media;
-using System.IO;
+using PhotoMapper.Core.Extension;
 
 namespace PhotoMapper.Core.Service
 {
@@ -54,15 +55,39 @@ namespace PhotoMapper.Core.Service
 			}
 			catch (IOException)
 			{
-				// TODO:  handle IO error.
+				// TODO:  log IO error.
 			}
 
 			return location;
 		}
 
-		public void SetImageLocation(string imagePath, LatLng location)
+		public bool SetImageLocation(string imagePath, LatLng location)
 		{
+			if (string.IsNullOrWhiteSpace(imagePath))
+				throw new ArgumentNullException("imagePath");
+			if (location == null)
+				throw new ArgumentNullException("location");
 
+			bool success = true;
+
+			try
+			{
+				var exif = new ExifInterface(imagePath);
+
+				exif.SetAttribute(ExifInterface.TagGpsLatitude, location.Latitude.ToDMS());
+				exif.SetAttribute(ExifInterface.TagGpsLatitudeRef, location.Latitude.ToLatitudeReference());
+				exif.SetAttribute(ExifInterface.TagGpsLongitude, location.Longitude.ToDMS());
+				exif.SetAttribute(ExifInterface.TagGpsLongitudeRef, location.Longitude.ToLongitudeReference());
+
+				exif.SaveAttributes();
+			}
+			catch (IOException)
+			{
+				// TODO:  log IO error.
+				success = false;
+			}
+
+			return success;
 		}
 	}
 }

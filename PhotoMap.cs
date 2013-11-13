@@ -180,7 +180,8 @@ namespace PhotoMapper
 			if (_markerLocation == null)
 				throw new ApplicationException("Location not marked on map.");
 
-			ImageService.SetImageLocation(_imageToLocatePath, _markerLocation);
+			if (!ImageService.SetImageLocation(_imageToLocatePath, _markerLocation))
+				this.DisplayMessage(Resource.String.SetImageLocationFailedTitle, Resource.String.SetImageLocationFailedMessage);
 		}
 
 		#endregion

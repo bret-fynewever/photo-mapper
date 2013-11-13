@@ -318,8 +318,8 @@ namespace PhotoMapper
 			// aapt resource value: 0x7f060019
 			public const int AppName = 2131099673;
 			
-			// aapt resource value: 0x7f06002b
-			public const int Cancel = 2131099691;
+			// aapt resource value: 0x7f06002d
+			public const int Cancel = 2131099693;
 			
 			// aapt resource value: 0x7f06001d
 			public const int GoToAddressButton = 2131099677;
@@ -351,11 +351,17 @@ namespace PhotoMapper
 			// aapt resource value: 0x7f060028
 			public const int NoGeoEnabledTitle = 2131099688;
 			
-			// aapt resource value: 0x7f06002a
-			public const int Okay = 2131099690;
+			// aapt resource value: 0x7f06002c
+			public const int Okay = 2131099692;
 			
 			// aapt resource value: 0x7f06001e
 			public const int SelectLocationButton = 2131099678;
+			
+			// aapt resource value: 0x7f06002b
+			public const int SetImageLocationFailedMessage = 2131099691;
+			
+			// aapt resource value: 0x7f06002a
+			public const int SetImageLocationFailedTitle = 2131099690;
 			
 			// aapt resource value: 0x7f06001a
 			public const int ShowMapButton = 2131099674;
