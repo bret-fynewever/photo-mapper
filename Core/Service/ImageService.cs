@@ -59,6 +59,11 @@ namespace PhotoMapper.Core.Service
 
 			return location;
 		}
+
+		public void SetImageLocation(string imagePath, LatLng location)
+		{
+
+		}
 	}
 }
 

@@ -7,6 +7,7 @@ namespace PhotoMapper.Core.Service
 	{
 		string GetImagePath(Android.Net.Uri uri);
 		LatLng GetImageLocation(string imagePath);
+		void SetImageLocation(string imagePath, LatLng location);
 	}
 }
 
