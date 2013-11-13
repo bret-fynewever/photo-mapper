@@ -8,21 +8,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
-            android:id="@+id/GoToMinneapolisButton"
-            android:text="@string/GotoMinneapolisButton"
+            android:id="@+id/GoToCurrentLocationButton"
+            android:text="@string/GoToCurrentLocationButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <Button
             android:id="@+id/GoToAddressButton"
-            android:text="@string/GotoAddressButton"
+            android:text="@string/GoToAddressButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
-    <Button
-        android:id="@+id/MapImageButton"
-        android:text="@string/MapImageButton"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/MapImageButton"
+            android:text="@string/MapImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/SelectLocationButton"
+            android:text="@string/SelectLocationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
     <fragment
         android:id="@+id/PhotoMapFragment"
         class="com.google.android.gms.maps.MapFragment"

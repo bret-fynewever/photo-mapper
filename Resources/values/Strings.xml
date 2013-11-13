@@ -3,8 +3,9 @@
 	<string name="AppName">PhotoMapper</string>
 	<string name="ShowMapButton">Show Map</string>
 	<string name="MapImageButton">Map Image</string>
-	<string name="GotoMinneapolisButton">Go to Minneapolis</string>
-	<string name="GotoAddressButton">Go to Address</string>
+	<string name="GoToCurrentLocationButton">Go to Current</string>
+	<string name="GoToAddressButton">Go to Address</string>
+	<string name="SelectLocationButton">Select Location</string>
 	<string name="AddressSearchTitle">Search for Address</string>
 	<string name="AddressSearchMessage">Enter Address, City, State, or Zip</string>
 	<string name="AddressNotFoundTitle">Address Not Found</string>

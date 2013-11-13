@@ -27,17 +27,19 @@ namespace PhotoMapper
 	{
 		private const int ZoomLevel = 15;
 		private const int SelectImageCode = 1000;
+		private LatLng _markerLocation = null;
+		private string _imageToLocatePath;
 
 		#region Services
 
-		private IGeoLocationService _geoLocationService;
+		private IGeoLocationService _geoLocationService = null;
 		public IGeoLocationService GeoLocationService
 		{
 			get { return _geoLocationService ?? (_geoLocationService = new GeoLocationService(this)); }
 			set { _geoLocationService = value; }
 		}
 
-		private IImageService _imageService;
+		private IImageService _imageService = null;
 		public IImageService ImageService
 		{
 			get { return _imageService ?? (_imageService = new ImageService(this)); }
@@ -68,10 +70,10 @@ namespace PhotoMapper
 			}
 
 			// Attach event handlers to controls.
-			Button goToMinneapolisButton = FindViewById<Button>(Resource.Id.GoToMinneapolisButton);
-			goToMinneapolisButton.Click += (object sender, EventArgs e) =>
+			Button goToCurrentLocationButton = FindViewById<Button>(Resource.Id.GoToCurrentLocationButton);
+			goToCurrentLocationButton.Click += (object sender, EventArgs e) =>
 			{
-				HandleGoToMinneapolis();
+				HandleGoToCurrentLocation();
 			};
 
 			Button goToAddressButton = FindViewById<Button>(Resource.Id.GoToAddressButton);
@@ -84,6 +86,13 @@ namespace PhotoMapper
 			mapImageButton.Click += (object sender, EventArgs e) =>
 			{
 				HandleMapImage();
+			};
+
+			Button selectLocationButton = FindViewById<Button>(Resource.Id.SelectLocationButton);
+			selectLocationButton.Visibility = ViewStates.Invisible;
+			selectLocationButton.Click += (object sender, EventArgs e) => 
+			{
+				HandleSelectLocation();
 			};
 		}
 
@@ -112,6 +121,20 @@ namespace PhotoMapper
 
 		#region Button Handlers
 
+		private async void HandleGoToCurrentLocation()
+		{
+			GoogleMap map = GetMapFromFragment(Resource.Id.PhotoMapFragment);
+			if (map != null)
+			{
+				LatLng currentLocation = await GeoLocationService.GetCurrentLocationAsync();
+				if (currentLocation != null)
+				{
+					map.ZoomToLocation(currentLocation, ZoomLevel);
+					map.SetMarker(currentLocation, "Current Location");
+				}
+			}
+		}
+
 		private void HandleGoToAddress()
 		{
 			GoogleMap map = GetMapFromFragment(Resource.Id.PhotoMapFragment);
@@ -135,17 +158,6 @@ namespace PhotoMapper
 			}
 		}
 
-		private void HandleGoToMinneapolis()
-		{
-			GoogleMap map = GetMapFromFragment(Resource.Id.PhotoMapFragment);
-			if (map != null)
-			{
-				var location = new LatLng(44.9833, -93.2667);   // Minneapolis latitude / longitude
-				map.ZoomToLocation(location, ZoomLevel);
-				map.SetMarker(location, "Downtown Minneapolis");
-			}
-		}
-
 		private void HandleMapImage()
 		{
 			var picker = new MediaPicker(this);
@@ -159,6 +171,16 @@ namespace PhotoMapper
 			imageIntent.SetType("image/*");
 			imageIntent.SetAction(Intent.ActionGetContent);
 			StartActivityForResult(Intent.CreateChooser(imageIntent, "Select Image"), SelectImageCode);
+		}
+
+		private void HandleSelectLocation()
+		{
+			if (string.IsNullOrWhiteSpace(_imageToLocatePath))
+				throw new ApplicationException("Image to locate not identified.");
+			if (_markerLocation == null)
+				throw new ApplicationException("Location not marked on map.");
+
+			ImageService.SetImageLocation(_imageToLocatePath, _markerLocation);
 		}
 
 		#endregion
@@ -204,7 +226,6 @@ namespace PhotoMapper
 			}
 			else // No EXIF geo data present in image...
 			{
-//				DisplayMessage(Resource.String.NoExifGeoDataInImageTitle, Resource.String.NoExifGeoDataInImageMessage);
 				new AlertDialog.Builder(this)
 					.SetTitle(Resource.String.NoExifGeoDataInImageTitle)
 					.SetMessage(Resource.String.NoExifGeoDataInImagePrompt)
@@ -226,8 +247,13 @@ namespace PhotoMapper
 				LatLng currentLocation = await GeoLocationService.GetCurrentLocationAsync();
 				if (currentLocation != null)
 				{
+					_imageToLocatePath = imagePath;
+					_markerLocation = currentLocation;
+
 					map.ZoomToLocation(currentLocation, zoom);
 					map.SetMovableMarker(currentLocation, Path.GetFileName(imagePath), MarkerDragEndHandler);
+					Button selectLocationButton = FindViewById<Button>(Resource.Id.SelectLocationButton);
+					selectLocationButton.Visibility = ViewStates.Visible;
 				}
 			}
 			else
@@ -238,7 +264,7 @@ namespace PhotoMapper
 
 		private void MarkerDragEndHandler(object sender, GoogleMap.MarkerDragEndEventArgs e)
 		{
-			// TODO
+			_markerLocation = e.P0.Position;
 		}
 	}
 }
