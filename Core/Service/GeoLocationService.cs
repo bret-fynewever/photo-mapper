@@ -40,7 +40,16 @@ namespace PhotoMapper.Core.Service
 			if (string.IsNullOrWhiteSpace(searchAddress))
 				throw new ArgumentNullException("searchAddress");
 
-			return Geocoder.GetFromLocationName(searchAddress, maxResults);
+			try
+			{
+				return Geocoder.GetFromLocationName(searchAddress, maxResults);
+			}
+			catch (Java.IO.IOException)
+			{
+				// TODO
+			}
+
+			return null;
 		}
 
 		public Address GeoSearch(string searchAddress)
@@ -60,8 +69,16 @@ namespace PhotoMapper.Core.Service
 			if (string.IsNullOrWhiteSpace(searchAddress))
 				throw new ArgumentNullException("searchAddress");
 
-			IList<Address> addresses = await Geocoder.GetFromLocationNameAsync(searchAddress, maxResults);
-			return addresses;
+			try
+			{
+				return await Geocoder.GetFromLocationNameAsync(searchAddress, maxResults);
+			}
+			catch (Java.IO.IOException)
+			{
+				// TODO
+			}
+
+			return null;
 		}
 
 		public async Task<Address> GeoSearchAsync(string searchAddress)
