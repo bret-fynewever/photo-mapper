@@ -58,16 +58,16 @@ namespace PhotoMapper
 
 			// Configure the map.
 			GoogleMap map = GetMapFromFragment(Resource.Id.PhotoMapFragment);
-			if (map != null)
-			{
-				map.MapType = GoogleMap.MapTypeNormal;
-				map.UiSettings.CompassEnabled = true;
-				map.UiSettings.RotateGesturesEnabled = true;
-				map.UiSettings.ScrollGesturesEnabled = true;
-				map.UiSettings.TiltGesturesEnabled = true;
-				map.UiSettings.ZoomControlsEnabled = true;
-				map.UiSettings.ZoomGesturesEnabled = true;
-			}
+			if (map == null)
+				throw new ApplicationException("Map handle not available.");
+			
+			map.MapType = GoogleMap.MapTypeNormal;
+			map.UiSettings.CompassEnabled = true;
+			map.UiSettings.RotateGesturesEnabled = true;
+			map.UiSettings.ScrollGesturesEnabled = true;
+			map.UiSettings.TiltGesturesEnabled = true;
+			map.UiSettings.ZoomControlsEnabled = true;
+			map.UiSettings.ZoomGesturesEnabled = true;
 
 			// Attach event handlers to controls.
 			Button goToCurrentLocationButton = FindViewById<Button>(Resource.Id.GoToCurrentLocationButton);
@@ -90,7 +90,7 @@ namespace PhotoMapper
 
 			Button selectLocationButton = FindViewById<Button>(Resource.Id.SelectLocationButton);
 			selectLocationButton.Visibility = ViewStates.Invisible;
-			selectLocationButton.Click += (object sender, EventArgs e) => 
+			selectLocationButton.Click += (object sender, EventArgs e) =>
 			{
 				HandleSelectLocation();
 			};
@@ -105,7 +105,7 @@ namespace PhotoMapper
 
 			GoogleMap map = GetMapFromFragment(Resource.Id.PhotoMapFragment);
 			if (map == null)
-				return;
+				throw new ApplicationException("Map handle not available.");
 
 			switch (requestCode)
 			{
@@ -124,7 +124,10 @@ namespace PhotoMapper
 		private async void HandleGoToCurrentLocation()
 		{
 			GoogleMap map = GetMapFromFragment(Resource.Id.PhotoMapFragment);
-			if (map != null)
+			if (map == null)
+				throw new ApplicationException("Map handle not available.");
+
+			if (GeoLocationService.IsGeolocationEnabled)
 			{
 				LatLng currentLocation = await GeoLocationService.GetCurrentLocationAsync();
 				if (currentLocation != null)
@@ -132,30 +135,38 @@ namespace PhotoMapper
 					map.ZoomToLocation(currentLocation, ZoomLevel);
 					map.SetMarker(currentLocation, "Current Location");
 				}
+				else
+				{
+					this.DisplayMessage(Resource.String.NoCurrentLocationTitle, Resource.String.NoCurrentLocationMessage);
+				}
+			}
+			else
+			{
+				this.DisplayMessage(Resource.String.NoGeoEnabledTitle, Resource.String.NoGeoEnabledMessage);
 			}
 		}
 
 		private void HandleGoToAddress()
 		{
 			GoogleMap map = GetMapFromFragment(Resource.Id.PhotoMapFragment);
-			if (map != null)
-			{
-				var inputControl = new EditText(this);
+			if (map == null)
+				throw new ApplicationException("Map handle not available.");
 
-				new AlertDialog.Builder(this)
-					.SetTitle(Resource.String.AddressSearchTitle)
-					.SetMessage(Resource.String.AddressSearchMessage)
-					.SetView(inputControl)
-					.SetPositiveButton(Resource.String.Okay, (object sender, DialogClickEventArgs e) =>
-					{
-						if (!string.IsNullOrWhiteSpace(inputControl.Text))
-							ZoomToAddress(map, inputControl.Text, ZoomLevel);
-					})
-					.SetNegativeButton(Resource.String.Cancel, (object sender, DialogClickEventArgs e) =>
-					{
-					})
-					.Show();
-			}
+			var inputControl = new EditText(this);
+
+			new AlertDialog.Builder(this)
+				.SetTitle(Resource.String.AddressSearchTitle)
+				.SetMessage(Resource.String.AddressSearchMessage)
+				.SetView(inputControl)
+				.SetPositiveButton(Resource.String.Okay, (object sender, DialogClickEventArgs e) =>
+				{
+					if (!string.IsNullOrWhiteSpace(inputControl.Text))
+						ZoomToAddress(map, inputControl.Text, ZoomLevel);
+				})
+				.SetNegativeButton(Resource.String.Cancel, (object sender, DialogClickEventArgs e) =>
+				{
+				})
+				.Show();
 		}
 
 		private void HandleMapImage()
@@ -175,6 +186,12 @@ namespace PhotoMapper
 
 		private void HandleSelectLocation()
 		{
+			GoogleMap map = GetMapFromFragment(Resource.Id.PhotoMapFragment);
+			if (map == null)
+				throw new ApplicationException("Map handle not available.");
+
+			// TODO
+
 			if (string.IsNullOrWhiteSpace(_imageToLocatePath))
 				throw new ApplicationException("Image to locate not identified.");
 			if (_markerLocation == null)
@@ -223,7 +240,7 @@ namespace PhotoMapper
 			if (location != null)
 			{
 				map.ZoomToLocation(location, zoom);
-				map.SetMarker(location, Path.GetFileName(imagePath));
+				map.SetMovableMarker(location, Path.GetFileName(imagePath), imagePath, MarkerDragEndHandler);
 			}
 			else // No EXIF geo data present in image...
 			{
@@ -243,6 +260,11 @@ namespace PhotoMapper
 
 		private async void PlaceMovableImageMarker(GoogleMap map, string imagePath, float zoom)
 		{
+			if (map == null)
+				throw new ArgumentNullException("map");
+			if (string.IsNullOrWhiteSpace(imagePath))
+				throw new ArgumentNullException("imagePath");
+
 			if (GeoLocationService.IsGeolocationEnabled)
 			{
 				LatLng currentLocation = await GeoLocationService.GetCurrentLocationAsync();
@@ -252,9 +274,13 @@ namespace PhotoMapper
 					_markerLocation = currentLocation;
 
 					map.ZoomToLocation(currentLocation, zoom);
-					map.SetMovableMarker(currentLocation, Path.GetFileName(imagePath), MarkerDragEndHandler);
+					map.SetMovableMarker(currentLocation, Path.GetFileName(imagePath), imagePath, MarkerDragEndHandler);
 					Button selectLocationButton = FindViewById<Button>(Resource.Id.SelectLocationButton);
 					selectLocationButton.Visibility = ViewStates.Visible;
+				}
+				else
+				{
+					this.DisplayMessage(Resource.String.NoCurrentLocationTitle, Resource.String.NoCurrentLocationMessage);
 				}
 			}
 			else

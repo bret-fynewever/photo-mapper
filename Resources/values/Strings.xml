@@ -19,6 +19,8 @@
 	<string name="NoGeoEnabledMessage">Enable device geolocation to use this feature.</string>
 	<string name="SetImageLocationFailedTitle">Error</string>
 	<string name="SetImageLocationFailedMessage">Failed to update image with location.</string>
+	<string name="NoCurrentLocationTitle">Error</string>
+	<string name="NoCurrentLocationMessage">Failed to determine current location.</string>
 	<string name="Okay">OK</string>
 	<string name="Cancel">Cancel</string>
 </resources>

@@ -123,10 +123,21 @@ namespace PhotoMapper.Core.Service
 		{
 			LatLng location = null;
 
-			if (Geolocator.IsGeolocationEnabled)
+			try
 			{
-				Position position = await Geolocator.GetPositionAsync(timeout: 10000);
-				location = position == null ? null : new LatLng(position.Latitude, position.Longitude);
+				if (Geolocator.IsGeolocationEnabled)
+				{
+					Position position = await Geolocator.GetPositionAsync(timeout: 10000);
+					location = position == null ? null : new LatLng(position.Latitude, position.Longitude);
+				}
+			}
+			catch (Java.IO.IOException)
+			{
+				// TODO
+			}
+			catch (Exception)
+			{
+				// TODO
 			}
 
 			return location;
