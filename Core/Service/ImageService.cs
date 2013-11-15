@@ -14,6 +14,9 @@ namespace PhotoMapper.Core.Service
 
 		public ImageService(Activity activity)
 		{
+			if (activity == null)
+				throw new ArgumentNullException("activity");
+
 			_activity = activity;
 		}
 
