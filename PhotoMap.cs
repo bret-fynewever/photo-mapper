@@ -99,7 +99,6 @@ namespace PhotoMapper
 		protected override void OnActivityResult(int requestCode, Result resultCode, Intent intent)
 		{
 			base.OnActivityResult(requestCode, resultCode, intent);
-
 			if (resultCode == Result.Canceled || intent == null)
 				return;
 
@@ -275,6 +274,7 @@ namespace PhotoMapper
 
 					map.ZoomToLocation(currentLocation, zoom);
 					map.SetMovableMarker(currentLocation, Path.GetFileName(imagePath), imagePath, MarkerDragEndHandler);
+
 					Button selectLocationButton = FindViewById<Button>(Resource.Id.SelectLocationButton);
 					selectLocationButton.Visibility = ViewStates.Visible;
 				}
