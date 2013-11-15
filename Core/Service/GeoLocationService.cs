@@ -58,10 +58,7 @@ namespace PhotoMapper.Core.Service
 				throw new ArgumentNullException("searchAddress");
 
 			IList<Address> addresses = GeoSearch(searchAddress, 1);
-			if (addresses != null)
-				return addresses.FirstOrDefault();
-
-			return null;
+			return addresses == null ? null : addresses.FirstOrDefault();
 		}
 
 		public async Task<IList<Address>> GeoSearchAsync(string searchAddress, int maxResults)
@@ -87,10 +84,7 @@ namespace PhotoMapper.Core.Service
 				throw new ArgumentNullException("searchAddress");
 
 			IList<Address> addresses = await GeoSearchAsync(searchAddress, 1);
-			if (addresses != null)
-				return addresses.FirstOrDefault();
-
-			return null;
+			return addresses == null ? null : addresses.FirstOrDefault();
 		}
 
 		#endregion
