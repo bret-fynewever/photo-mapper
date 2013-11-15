@@ -68,6 +68,7 @@ namespace PhotoMapper
 			map.UiSettings.TiltGesturesEnabled = true;
 			map.UiSettings.ZoomControlsEnabled = true;
 			map.UiSettings.ZoomGesturesEnabled = true;
+			map.MarkerDragEnd += MarkerDragEndHandler;
 
 			// Attach event handlers to controls.
 			Button goToCurrentLocationButton = FindViewById<Button>(Resource.Id.GoToCurrentLocationButton);
@@ -239,7 +240,7 @@ namespace PhotoMapper
 			if (location != null)
 			{
 				map.ZoomToLocation(location, zoom);
-				map.SetMovableMarker(location, Path.GetFileName(imagePath), imagePath, MarkerDragEndHandler);
+				map.SetMarker(location, Path.GetFileName(imagePath), imagePath, draggable : true);
 			}
 			else // No EXIF geo data present in image...
 			{
@@ -273,7 +274,7 @@ namespace PhotoMapper
 					_markerLocation = currentLocation;
 
 					map.ZoomToLocation(currentLocation, zoom);
-					map.SetMovableMarker(currentLocation, Path.GetFileName(imagePath), imagePath, MarkerDragEndHandler);
+					map.SetMarker(currentLocation, Path.GetFileName(imagePath), imagePath, draggable : true);
 
 					Button selectLocationButton = FindViewById<Button>(Resource.Id.SelectLocationButton);
 					selectLocationButton.Visibility = ViewStates.Visible;

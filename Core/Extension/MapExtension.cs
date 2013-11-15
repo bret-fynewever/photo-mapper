@@ -23,7 +23,7 @@ namespace PhotoMapper.Core.Extension
 			map.AnimateCamera(update);
 		}
 
-		public static void SetMarker(this GoogleMap map, LatLng location, string title, string snippet = "")
+		public static void SetMarker(this GoogleMap map, LatLng location, string title, string snippet = "", bool draggable = false)
 		{
 			if (map == null)
 				throw new ArgumentNullException("map");
@@ -34,24 +34,8 @@ namespace PhotoMapper.Core.Extension
 			markerOptions.SetPosition(location);
 			markerOptions.SetTitle(title);
 			markerOptions.SetSnippet(snippet);
+			markerOptions.Draggable(draggable);
 			map.AddMarker(markerOptions);
-		}
-
-		public static void SetMovableMarker(this GoogleMap map, LatLng location, string title, string snippet = "", EventHandler<GoogleMap.MarkerDragEndEventArgs> markerDragEndHandler = null)
-		{
-			if (map == null)
-				throw new ArgumentNullException("map");
-			if (location == null)
-				throw new ArgumentNullException("location");
-
-			MarkerOptions markerOptions = new MarkerOptions();
-			markerOptions.SetPosition(location);
-			markerOptions.SetTitle(title);
-			markerOptions.SetSnippet(snippet);
-			markerOptions.Draggable(true);
-			map.AddMarker(markerOptions);
-			if (markerDragEndHandler != null)
-				map.MarkerDragEnd += markerDragEndHandler;
 		}
 	}
 }
