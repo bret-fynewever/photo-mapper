@@ -63,6 +63,8 @@
     <Compile Include="Core\Service\ImageService.cs" />
     <Compile Include="Core\Extension\MapExtension.cs" />
     <Compile Include="Core\Extension\DoubleExtension.cs" />
+    <Compile Include="Core\Model\Image.cs" />
+    <Compile Include="Core\Extension\ContextExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -90,5 +92,6 @@
     <Folder Include="Core\" />
     <Folder Include="Core\Extension\" />
     <Folder Include="Core\Service\" />
+    <Folder Include="Core\Model\" />
   </ItemGroup>
 </Project>

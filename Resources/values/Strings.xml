@@ -21,6 +21,9 @@
 	<string name="SetImageLocationFailedMessage">Failed to update image with location.</string>
 	<string name="NoCurrentLocationTitle">Error</string>
 	<string name="NoCurrentLocationMessage">Failed to determine current location.</string>
+	<string name="SetImageLocationTitle">Confirmation</string>
+	<string name="SetImageLocationPrompt">Set image location?</string>
+	<string name="SystemError">System Error</string>
 	<string name="Okay">OK</string>
 	<string name="Cancel">Cancel</string>
 </resources>

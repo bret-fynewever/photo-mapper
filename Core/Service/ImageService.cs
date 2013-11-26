@@ -56,9 +56,9 @@ namespace PhotoMapper.Core.Service
 				if (exif.GetLatLong(latLong))
 					location = new LatLng(latLong[0], latLong[1]);
 			}
-			catch (IOException)
+			catch (IOException ioExc)
 			{
-				// TODO:  log IO error.
+				_activity.DisplayMessage(Resource.String.SystemError, ioExc.Message);
 			}
 
 			return location;
@@ -84,9 +84,9 @@ namespace PhotoMapper.Core.Service
 
 				exif.SaveAttributes();
 			}
-			catch (IOException)
+			catch (IOException ioExc)
 			{
-				// TODO:  log IO error.
+				_activity.DisplayMessage(Resource.String.SystemError, ioExc.Message);
 				success = false;
 			}
 

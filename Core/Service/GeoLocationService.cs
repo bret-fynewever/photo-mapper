@@ -12,6 +12,7 @@ using Android.Widget;
 using Android.Locations;
 using Android.Gms.Maps.Model;
 using Xamarin.Geolocation;
+using PhotoMapper.Core.Extension;
 
 namespace PhotoMapper.Core.Service
 {
@@ -44,9 +45,9 @@ namespace PhotoMapper.Core.Service
 			{
 				return Geocoder.GetFromLocationName(searchAddress, maxResults);
 			}
-			catch (Java.IO.IOException)
+			catch (Java.IO.IOException ioExc)
 			{
-				// TODO
+				_context.DisplayMessage(Resource.String.SystemError, ioExc.Message);
 			}
 
 			return null;
@@ -70,9 +71,9 @@ namespace PhotoMapper.Core.Service
 			{
 				return await Geocoder.GetFromLocationNameAsync(searchAddress, maxResults);
 			}
-			catch (Java.IO.IOException)
+			catch (Java.IO.IOException ioExc)
 			{
-				// TODO
+				_context.DisplayMessage(Resource.String.SystemError, ioExc.Message);
 			}
 
 			return null;
@@ -125,13 +126,9 @@ namespace PhotoMapper.Core.Service
 					location = position == null ? null : new LatLng(position.Latitude, position.Longitude);
 				}
 			}
-			catch (Java.IO.IOException)
+			catch (Java.IO.IOException ioExc)
 			{
-				// TODO
-			}
-			catch (Exception)
-			{
-				// TODO
+				_context.DisplayMessage(Resource.String.SystemError, ioExc.Message);
 			}
 
 			return location;
