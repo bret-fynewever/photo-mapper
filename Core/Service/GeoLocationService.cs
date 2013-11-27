@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using Android.Locations;
 using Android.Gms.Maps.Model;
+using Android.Util;
 using Xamarin.Geolocation;
 using PhotoMapper.Core.Extension;
 
@@ -18,6 +19,7 @@ namespace PhotoMapper.Core.Service
 {
 	public class GeoLocationService : IGeoLocationService
 	{
+		private const string _logTag = "PhotoMapper.Core.Service.GeoLocationService";
 		private Context _context = null;
 
 		public GeoLocationService(Context context)
@@ -45,9 +47,9 @@ namespace PhotoMapper.Core.Service
 			{
 				return Geocoder.GetFromLocationName(searchAddress, maxResults);
 			}
-			catch (Java.IO.IOException ioExc)
+			catch (Java.IO.IOException exc)
 			{
-				_context.DisplayMessage(Resource.String.SystemError, ioExc.Message);
+				Log.Error(_logTag, exc.Message);
 			}
 
 			return null;
@@ -71,9 +73,9 @@ namespace PhotoMapper.Core.Service
 			{
 				return await Geocoder.GetFromLocationNameAsync(searchAddress, maxResults);
 			}
-			catch (Java.IO.IOException ioExc)
+			catch (Java.IO.IOException exc)
 			{
-				_context.DisplayMessage(Resource.String.SystemError, ioExc.Message);
+				Log.Error(_logTag, exc.Message);
 			}
 
 			return null;
@@ -126,9 +128,13 @@ namespace PhotoMapper.Core.Service
 					location = position == null ? null : new LatLng(position.Latitude, position.Longitude);
 				}
 			}
-			catch (Java.IO.IOException ioExc)
+			catch (Java.IO.IOException exc)
 			{
-				_context.DisplayMessage(Resource.String.SystemError, ioExc.Message);
+				Log.Error(_logTag, exc.Message);
+			}
+			catch (TaskCanceledException exc)
+			{
+				Log.Error(_logTag, exc.Message);
 			}
 
 			return location;

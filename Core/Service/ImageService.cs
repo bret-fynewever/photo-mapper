@@ -4,12 +4,14 @@ using Android.App;
 using Android.Gms.Maps.Model;
 using Android.Database;
 using Android.Media;
+using Android.Util;
 using PhotoMapper.Core.Extension;
 
 namespace PhotoMapper.Core.Service
 {
 	public class ImageService : IImageService
 	{
+		private const string _logTag = "PhotoMapper.Core.Service.ImageService";
 		private Activity _activity = null;
 
 		public ImageService(Activity activity)
@@ -56,9 +58,9 @@ namespace PhotoMapper.Core.Service
 				if (exif.GetLatLong(latLong))
 					location = new LatLng(latLong[0], latLong[1]);
 			}
-			catch (IOException ioExc)
+			catch (IOException exc)
 			{
-				_activity.DisplayMessage(Resource.String.SystemError, ioExc.Message);
+				Log.Error(_logTag, exc.Message);
 			}
 
 			return location;
@@ -84,9 +86,9 @@ namespace PhotoMapper.Core.Service
 
 				exif.SaveAttributes();
 			}
-			catch (IOException ioExc)
+			catch (IOException exc)
 			{
-				_activity.DisplayMessage(Resource.String.SystemError, ioExc.Message);
+				Log.Error(_logTag, exc.Message);
 				success = false;
 			}
 
