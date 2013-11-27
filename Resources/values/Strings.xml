@@ -5,7 +5,6 @@
 	<string name="MapImageButton">Map Image</string>
 	<string name="GoToCurrentLocationButton">Go to Current</string>
 	<string name="GoToAddressButton">Go to Address</string>
-	<string name="SelectLocationButton">Select Location</string>
 	<string name="AddressSearchTitle">Search for Address</string>
 	<string name="AddressSearchMessage">Enter Address, City, State, or Zip</string>
 	<string name="AddressNotFoundTitle">Address Not Found</string>
@@ -23,6 +22,8 @@
 	<string name="NoCurrentLocationMessage">Failed to determine current location.</string>
 	<string name="SetImageLocationTitle">Confirmation</string>
 	<string name="SetImageLocationPrompt">Set image location?</string>
+	<string name="ImageAlreadyMappedTitle">Error</string>
+	<string name="ImageAlreadyMappedMessage">Image has already been mapped.</string>
 	<string name="SystemError">System Error</string>
 	<string name="Okay">OK</string>
 	<string name="Cancel">Cancel</string>

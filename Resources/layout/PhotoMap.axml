@@ -27,11 +27,6 @@
             android:text="@string/MapImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/SelectLocationButton"
-            android:text="@string/SelectLocationButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
     </LinearLayout>
     <fragment
         android:id="@+id/PhotoMapFragment"

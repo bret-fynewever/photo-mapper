@@ -247,11 +247,8 @@ namespace PhotoMapper
 			// aapt resource value: 0x7f050008
 			public const int MapImageButton = 2131034120;
 			
-			// aapt resource value: 0x7f05000a
-			public const int PhotoMapFragment = 2131034122;
-			
 			// aapt resource value: 0x7f050009
-			public const int SelectLocationButton = 2131034121;
+			public const int PhotoMapFragment = 2131034121;
 			
 			// aapt resource value: 0x7f050005
 			public const int ShowMapButton = 2131034117;
@@ -303,23 +300,23 @@ namespace PhotoMapper
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f060022
-			public const int AddressNotFoundMessage = 2131099682;
-			
 			// aapt resource value: 0x7f060021
-			public const int AddressNotFoundTitle = 2131099681;
+			public const int AddressNotFoundMessage = 2131099681;
 			
 			// aapt resource value: 0x7f060020
-			public const int AddressSearchMessage = 2131099680;
+			public const int AddressNotFoundTitle = 2131099680;
 			
 			// aapt resource value: 0x7f06001f
-			public const int AddressSearchTitle = 2131099679;
+			public const int AddressSearchMessage = 2131099679;
+			
+			// aapt resource value: 0x7f06001e
+			public const int AddressSearchTitle = 2131099678;
 			
 			// aapt resource value: 0x7f060019
 			public const int AppName = 2131099673;
 			
-			// aapt resource value: 0x7f060032
-			public const int Cancel = 2131099698;
+			// aapt resource value: 0x7f060033
+			public const int Cancel = 2131099699;
 			
 			// aapt resource value: 0x7f06001d
 			public const int GoToAddressButton = 2131099677;
@@ -327,59 +324,62 @@ namespace PhotoMapper
 			// aapt resource value: 0x7f06001c
 			public const int GoToCurrentLocationButton = 2131099676;
 			
+			// aapt resource value: 0x7f060030
+			public const int ImageAlreadyMappedMessage = 2131099696;
+			
+			// aapt resource value: 0x7f06002f
+			public const int ImageAlreadyMappedTitle = 2131099695;
+			
 			// aapt resource value: 0x7f06001b
 			public const int MapImageButton = 2131099675;
 			
-			// aapt resource value: 0x7f06002d
-			public const int NoCurrentLocationMessage = 2131099693;
-			
 			// aapt resource value: 0x7f06002c
-			public const int NoCurrentLocationTitle = 2131099692;
-			
-			// aapt resource value: 0x7f060027
-			public const int NoDeviceImageSupportMessage = 2131099687;
-			
-			// aapt resource value: 0x7f060026
-			public const int NoDeviceImageSupportTitle = 2131099686;
-			
-			// aapt resource value: 0x7f060024
-			public const int NoExifGeoDataInImageMessage = 2131099684;
-			
-			// aapt resource value: 0x7f060025
-			public const int NoExifGeoDataInImagePrompt = 2131099685;
-			
-			// aapt resource value: 0x7f060023
-			public const int NoExifGeoDataInImageTitle = 2131099683;
-			
-			// aapt resource value: 0x7f060029
-			public const int NoGeoEnabledMessage = 2131099689;
-			
-			// aapt resource value: 0x7f060028
-			public const int NoGeoEnabledTitle = 2131099688;
-			
-			// aapt resource value: 0x7f060031
-			public const int Okay = 2131099697;
-			
-			// aapt resource value: 0x7f06001e
-			public const int SelectLocationButton = 2131099678;
+			public const int NoCurrentLocationMessage = 2131099692;
 			
 			// aapt resource value: 0x7f06002b
-			public const int SetImageLocationFailedMessage = 2131099691;
+			public const int NoCurrentLocationTitle = 2131099691;
+			
+			// aapt resource value: 0x7f060026
+			public const int NoDeviceImageSupportMessage = 2131099686;
+			
+			// aapt resource value: 0x7f060025
+			public const int NoDeviceImageSupportTitle = 2131099685;
+			
+			// aapt resource value: 0x7f060023
+			public const int NoExifGeoDataInImageMessage = 2131099683;
+			
+			// aapt resource value: 0x7f060024
+			public const int NoExifGeoDataInImagePrompt = 2131099684;
+			
+			// aapt resource value: 0x7f060022
+			public const int NoExifGeoDataInImageTitle = 2131099682;
+			
+			// aapt resource value: 0x7f060028
+			public const int NoGeoEnabledMessage = 2131099688;
+			
+			// aapt resource value: 0x7f060027
+			public const int NoGeoEnabledTitle = 2131099687;
+			
+			// aapt resource value: 0x7f060032
+			public const int Okay = 2131099698;
 			
 			// aapt resource value: 0x7f06002a
-			public const int SetImageLocationFailedTitle = 2131099690;
+			public const int SetImageLocationFailedMessage = 2131099690;
 			
-			// aapt resource value: 0x7f06002f
-			public const int SetImageLocationPrompt = 2131099695;
+			// aapt resource value: 0x7f060029
+			public const int SetImageLocationFailedTitle = 2131099689;
 			
 			// aapt resource value: 0x7f06002e
-			public const int SetImageLocationTitle = 2131099694;
+			public const int SetImageLocationPrompt = 2131099694;
+			
+			// aapt resource value: 0x7f06002d
+			public const int SetImageLocationTitle = 2131099693;
 			
 			// aapt resource value: 0x7f06001a
 			public const int ShowMapButton = 2131099674;
 			
-			// aapt resource value: 0x7f060030
-			public const int SystemError = 2131099696;
+			// aapt resource value: 0x7f060031
+			public const int SystemError = 2131099697;
 			
 			// aapt resource value: 0x7f060014
 			public const int auth_client_needs_enabling_title = 2131099668;

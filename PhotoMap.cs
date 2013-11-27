@@ -19,6 +19,7 @@ using Xamarin.Geolocation;
 using Xamarin.Media;
 using PhotoMapper.Core.Service;
 using PhotoMapper.Core.Extension;
+using PhotoMapper.Core.Model;
 
 namespace PhotoMapper
 {
@@ -27,8 +28,7 @@ namespace PhotoMapper
 	{
 		private const int ZoomLevel = 15;
 		private const int SelectImageCode = 1000;
-		private LatLng _markerLocation = null;
-		private string _imageToLocatePath;
+		private Dictionary<string, Image> _imageMarkers = new Dictionary<string, Image>();
 
 		#region Services
 
@@ -68,7 +68,7 @@ namespace PhotoMapper
 			map.UiSettings.TiltGesturesEnabled = true;
 			map.UiSettings.ZoomControlsEnabled = true;
 			map.UiSettings.ZoomGesturesEnabled = true;
-			map.MarkerDragEnd += MarkerDragEndHandler;
+			map.InfoWindowClick += HandleInfoWindowClick;
 
 			// Attach event handlers to controls.
 			Button goToCurrentLocationButton = FindViewById<Button>(Resource.Id.GoToCurrentLocationButton);
@@ -87,13 +87,6 @@ namespace PhotoMapper
 			mapImageButton.Click += (object sender, EventArgs e) =>
 			{
 				HandleMapImage();
-			};
-
-			Button selectLocationButton = FindViewById<Button>(Resource.Id.SelectLocationButton);
-			selectLocationButton.Visibility = ViewStates.Invisible;
-			selectLocationButton.Click += (object sender, EventArgs e) =>
-			{
-				HandleSelectLocation();
 			};
 		}
 
@@ -184,23 +177,6 @@ namespace PhotoMapper
 			StartActivityForResult(Intent.CreateChooser(imageIntent, "Select Image"), SelectImageCode);
 		}
 
-		private void HandleSelectLocation()
-		{
-			GoogleMap map = GetMapFromFragment(Resource.Id.PhotoMapFragment);
-			if (map == null)
-				throw new ApplicationException("Map handle not available.");
-
-			// TODO
-
-			if (string.IsNullOrWhiteSpace(_imageToLocatePath))
-				throw new ApplicationException("Image to locate not identified.");
-			if (_markerLocation == null)
-				throw new ApplicationException("Location not marked on map.");
-
-			if (!ImageService.SetImageLocation(_imageToLocatePath, _markerLocation))
-				this.DisplayMessage(Resource.String.SetImageLocationFailedTitle, Resource.String.SetImageLocationFailedMessage);
-		}
-
 		#endregion
 
 		private GoogleMap GetMapFromFragment(int mapFragmentId)
@@ -236,15 +212,23 @@ namespace PhotoMapper
 			if (string.IsNullOrWhiteSpace(imagePath))
 				throw new ArgumentNullException("imagePath");
 
-			LatLng location = ImageService.GetImageLocation(imagePath);
-			if (location != null)
+			if (_imageMarkers.Any(kvp => kvp.Value.ImagePath == imagePath))
 			{
-				map.ZoomToLocation(location, zoom);
-				map.SetMarker(location, Path.GetFileName(imagePath), imagePath, draggable : true);
+				this.DisplayMessage(Resource.String.ImageAlreadyMappedTitle, Resource.String.ImageAlreadyMappedMessage);
 			}
-			else // No EXIF geo data present in image...
+			else
 			{
-				new AlertDialog.Builder(this)
+				LatLng location = ImageService.GetImageLocation(imagePath);
+				if (location != null)
+				{
+					map.ZoomToLocation(location, zoom);
+					Marker marker = map.SetMarker(location, Path.GetFileName(imagePath), imagePath, draggable : true);
+					if (marker != null)
+						_imageMarkers.Add(marker.Id, new Image { ImagePath = imagePath, Location = location });
+				}
+				else // No EXIF geo data present in image...
+				{
+					new AlertDialog.Builder(this)
 					.SetTitle(Resource.String.NoExifGeoDataInImageTitle)
 					.SetMessage(Resource.String.NoExifGeoDataInImagePrompt)
 					.SetPositiveButton(Resource.String.Okay, (object sender, DialogClickEventArgs e) =>
@@ -255,6 +239,7 @@ namespace PhotoMapper
 					{
 					})
 					.Show();
+				}
 			}
 		}
 
@@ -270,14 +255,10 @@ namespace PhotoMapper
 				LatLng currentLocation = await GeoLocationService.GetCurrentLocationAsync();
 				if (currentLocation != null)
 				{
-					_imageToLocatePath = imagePath;
-					_markerLocation = currentLocation;
-
 					map.ZoomToLocation(currentLocation, zoom);
-					map.SetMarker(currentLocation, Path.GetFileName(imagePath), imagePath, draggable : true);
-
-					Button selectLocationButton = FindViewById<Button>(Resource.Id.SelectLocationButton);
-					selectLocationButton.Visibility = ViewStates.Visible;
+					Marker marker = map.SetMarker(currentLocation, Path.GetFileName(imagePath), imagePath, draggable : true);
+					if (marker != null)
+						_imageMarkers.Add(marker.Id, new Image { ImagePath = imagePath, Location = currentLocation });
 				}
 				else
 				{
@@ -289,10 +270,29 @@ namespace PhotoMapper
 				this.DisplayMessage(Resource.String.NoGeoEnabledTitle, Resource.String.NoGeoEnabledMessage);
 			}
 		}
-
-		private void MarkerDragEndHandler(object sender, GoogleMap.MarkerDragEndEventArgs e)
+		
+		void HandleInfoWindowClick(object sender, GoogleMap.InfoWindowClickEventArgs e)
 		{
-			_markerLocation = e.P0.Position;
+			var marker = e.P0;
+			if (marker != null && _imageMarkers.ContainsKey(marker.Id))
+			{
+				var image = _imageMarkers[marker.Id];
+				if (image != null && image.Location != marker.Position)
+				{
+					new AlertDialog.Builder(this)
+						.SetTitle(Resource.String.SetImageLocationTitle)
+						.SetMessage(Resource.String.SetImageLocationPrompt)
+						.SetPositiveButton(Resource.String.Okay, (object eventSender, DialogClickEventArgs eventArgs) =>
+						{
+							if (!ImageService.SetImageLocation(image.ImagePath, marker.Position))
+								this.DisplayMessage(Resource.String.SetImageLocationFailedTitle, Resource.String.SetImageLocationFailedMessage);
+						})
+						.SetNegativeButton(Resource.String.Cancel, (object eventSender, DialogClickEventArgs eventArgs) =>
+						{
+						})
+						.Show();
+				}
+			}
 		}
 	}
 }
