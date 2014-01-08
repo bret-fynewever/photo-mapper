@@ -65,6 +65,7 @@
     <Compile Include="Core\Extension\DoubleExtension.cs" />
     <Compile Include="Core\Model\Image.cs" />
     <Compile Include="Core\Extension\ContextExtension.cs" />
+    <Compile Include="PhotoInfoWindowAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -76,6 +77,7 @@
     <AndroidResource Include="Resources\values\Strings.xml" />
     <AndroidResource Include="Resources\drawable\Icon.png" />
     <AndroidResource Include="Resources\layout\PhotoMap.axml" />
+    <AndroidResource Include="Resources\layout\PhotoInfoWindow.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>

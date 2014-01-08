@@ -69,6 +69,7 @@ namespace PhotoMapper
 			map.UiSettings.ZoomControlsEnabled = true;
 			map.UiSettings.ZoomGesturesEnabled = true;
 			map.InfoWindowClick += HandleInfoWindowClick;
+			map.SetInfoWindowAdapter(new PhotoInfoWindowAdapter(this, _imageMarkers));
 
 			// Attach event handlers to controls.
 			Button goToCurrentLocationButton = FindViewById<Button>(Resource.Id.GoToCurrentLocationButton);
@@ -103,7 +104,7 @@ namespace PhotoMapper
 			switch (requestCode)
 			{
 				case SelectImageCode:
-					MapImage(map, ImageService.GetImagePath(intent.Data), ZoomLevel);
+					MapImage(map, intent.Data, ZoomLevel);
 					break;
 				default:
 					break;
@@ -179,6 +180,8 @@ namespace PhotoMapper
 
 		#endregion
 
+		#region Helpers
+
 		private GoogleMap GetMapFromFragment(int mapFragmentId)
 		{
 			MapFragment mapFragment = (MapFragment)FragmentManager.FindFragmentById(mapFragmentId);
@@ -205,35 +208,37 @@ namespace PhotoMapper
 			}
 		}
 
-		private void MapImage(GoogleMap map, string imagePath, float zoom)
+		private void MapImage(GoogleMap map, Android.Net.Uri imageUri, float zoom)
 		{
 			if (map == null)
 				throw new ArgumentNullException("map");
-			if (string.IsNullOrWhiteSpace(imagePath))
-				throw new ArgumentNullException("imagePath");
+			if (imageUri == null)
+				throw new ArgumentNullException("imageUri");
 
-			if (_imageMarkers.Any(kvp => kvp.Value.ImagePath == imagePath))
+			string imagePath = ImageService.GetImagePath(imageUri);
+
+			if (_imageMarkers.Any(kvp => kvp.Value.ImagePath == imagePath)) // Image already mapped.
 			{
 				this.DisplayMessage(Resource.String.ImageAlreadyMappedTitle, Resource.String.ImageAlreadyMappedMessage);
 			}
-			else
+			else // Map the image with a marker.
 			{
 				LatLng location = ImageService.GetImageLocation(imagePath);
-				if (location != null)
+				if (location != null) // The image contains EXIF geo data.
 				{
 					map.ZoomToLocation(location, zoom);
 					Marker marker = map.SetMarker(location, Path.GetFileName(imagePath), imagePath, draggable : true);
 					if (marker != null)
-						_imageMarkers.Add(marker.Id, new Image { ImagePath = imagePath, Location = location });
+						_imageMarkers.Add(marker.Id, new Image { ImageUri = imageUri, ImagePath = imagePath, Location = location });
 				}
-				else // No EXIF geo data present in image...
+				else // No EXIF geo data present in image.
 				{
 					new AlertDialog.Builder(this)
 					.SetTitle(Resource.String.NoExifGeoDataInImageTitle)
 					.SetMessage(Resource.String.NoExifGeoDataInImagePrompt)
 					.SetPositiveButton(Resource.String.Okay, (object sender, DialogClickEventArgs e) =>
 					{
-						PlaceMovableImageMarker(map, imagePath, zoom);
+						PlaceMovableImageMarker(map, imageUri, imagePath, zoom);
 					})
 					.SetNegativeButton(Resource.String.Cancel, (object sender, DialogClickEventArgs e) =>
 					{
@@ -243,10 +248,12 @@ namespace PhotoMapper
 			}
 		}
 
-		private async void PlaceMovableImageMarker(GoogleMap map, string imagePath, float zoom)
+		private async void PlaceMovableImageMarker(GoogleMap map, Android.Net.Uri imageUri, string imagePath, float zoom)
 		{
 			if (map == null)
 				throw new ArgumentNullException("map");
+			if (imageUri == null)
+				throw new ArgumentNullException("imageUri");
 			if (string.IsNullOrWhiteSpace(imagePath))
 				throw new ArgumentNullException("imagePath");
 
@@ -258,7 +265,7 @@ namespace PhotoMapper
 					map.ZoomToLocation(currentLocation, zoom);
 					Marker marker = map.SetMarker(currentLocation, Path.GetFileName(imagePath), imagePath, draggable : true);
 					if (marker != null)
-						_imageMarkers.Add(marker.Id, new Image { ImagePath = imagePath, Location = currentLocation });
+						_imageMarkers.Add(marker.Id, new Image { ImageUri = imageUri, ImagePath = imagePath, Location = currentLocation });
 				}
 				else
 				{
@@ -294,6 +301,8 @@ namespace PhotoMapper
 				}
 			}
 		}
+
+		#endregion
 	}
 }
 
