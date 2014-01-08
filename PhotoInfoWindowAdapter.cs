@@ -41,6 +41,9 @@ namespace PhotoMapper
 					{
 						ImageView imageView = (ImageView)view.FindViewById(Resource.Id.MappedImage);
 						imageView.SetImageBitmap(thumbnail);
+
+						TextView textView = (TextView)view.FindViewById(Resource.Id.MappedImageName);
+						textView.Text = System.IO.Path.GetFileName(image.ImagePath);
 					}
 				}
 			}
