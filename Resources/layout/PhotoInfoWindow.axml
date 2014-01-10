@@ -6,7 +6,7 @@
     android:minWidth="25px"
     android:minHeight="25px">
     <ImageView
-        android:id="@+id/MappedImage"
+        android:id="@+id/ImageViewMappedImage"
         android:src="@android:drawable/ic_menu_gallery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,9 +17,9 @@
         android:paddingBottom="2dp"
         android:scaleType="fitCenter" />
     <TextView
+        android:id="@+id/TextViewMappedImageName"
         android:text=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/MappedImageName" />
+        android:layout_gravity="center" />
 </LinearLayout>

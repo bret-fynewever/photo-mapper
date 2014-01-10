@@ -7,14 +7,14 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/GoToCurrentLocationButton"
-            android:text="@string/GoToCurrentLocationButton"
+    <!--        <Button
+            android:id="@+id/ButtonGoToCurrentLocation"
+            android:text="@string/ButtonGoToCurrentLocation"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" />-->
         <Button
-            android:id="@+id/GoToAddressButton"
-            android:text="@string/GoToAddressButton"
+            android:id="@+id/ButtonGoToAddress"
+            android:text="@string/ButtonGoToAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -23,13 +23,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
-            android:id="@+id/MapImageButton"
-            android:text="@string/MapImageButton"
+            android:id="@+id/ButtonMapImage"
+            android:text="@string/ButtonMapImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
     <fragment
-        android:id="@+id/PhotoMapFragment"
+        android:id="@+id/FragmentPhotoMap"
         class="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

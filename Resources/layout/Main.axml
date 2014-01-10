@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <Button
-        android:id="@+id/ShowMapButton"
-        android:text="@string/ShowMapButton"
+        android:id="@+id/ButtonShowMap"
+        android:text="@string/ButtonShowMap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

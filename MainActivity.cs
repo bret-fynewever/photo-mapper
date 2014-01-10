@@ -19,7 +19,7 @@ namespace PhotoMapper
 			SetContentView(Resource.Layout.Main);
 
 			// Attach events to controls.
-			Button showMapButton = FindViewById<Button>(Resource.Id.ShowMapButton);
+			Button showMapButton = FindViewById<Button>(Resource.Id.ButtonShowMap);
 			showMapButton.Click += delegate
 			{
 				StartActivity(typeof(PhotoMap));

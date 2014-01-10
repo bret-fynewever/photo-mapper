@@ -57,7 +57,7 @@ namespace PhotoMapper
 			SetContentView(Resource.Layout.PhotoMap);
 
 			// Configure the map.
-			GoogleMap map = GetMapFromFragment(Resource.Id.PhotoMapFragment);
+			GoogleMap map = GetMapFromFragment(Resource.Id.FragmentPhotoMap);
 			if (map == null)
 				throw new ApplicationException("Map handle not available.");
 			
@@ -68,24 +68,26 @@ namespace PhotoMapper
 			map.UiSettings.TiltGesturesEnabled = true;
 			map.UiSettings.ZoomControlsEnabled = true;
 			map.UiSettings.ZoomGesturesEnabled = true;
+			map.UiSettings.MyLocationButtonEnabled = true;
 			map.InfoWindowClick += HandleInfoWindowClick;
+			map.MyLocationEnabled = true;
 			map.SetInfoWindowAdapter(new PhotoInfoWindowAdapter(this, _imageMarkers));
 
 			// Attach event handlers to controls.
-			Button goToCurrentLocationButton = FindViewById<Button>(Resource.Id.GoToCurrentLocationButton);
-			goToCurrentLocationButton.Click += (object sender, EventArgs e) =>
-			{
-				HandleGoToCurrentLocation();
-			};
+//			Button buttonGoToCurrentLocation = FindViewById<Button>(Resource.Id.ButtonGoToCurrentLocation);
+//			buttonGoToCurrentLocation.Click += (object sender, EventArgs e) =>
+//			{
+//				HandleGoToCurrentLocation();
+//			};
 
-			Button goToAddressButton = FindViewById<Button>(Resource.Id.GoToAddressButton);
-			goToAddressButton.Click += (object sender, EventArgs e) =>
+			Button buttonGoToAddress = FindViewById<Button>(Resource.Id.ButtonGoToAddress);
+			buttonGoToAddress.Click += (object sender, EventArgs e) =>
 			{
 				HandleGoToAddress();
 			};
 			
-			Button mapImageButton = FindViewById<Button>(Resource.Id.MapImageButton);
-			mapImageButton.Click += (object sender, EventArgs e) =>
+			Button buttonMapImage = FindViewById<Button>(Resource.Id.ButtonMapImage);
+			buttonMapImage.Click += (object sender, EventArgs e) =>
 			{
 				HandleMapImage();
 			};
@@ -97,7 +99,7 @@ namespace PhotoMapper
 			if (resultCode == Result.Canceled || intent == null)
 				return;
 
-			GoogleMap map = GetMapFromFragment(Resource.Id.PhotoMapFragment);
+			GoogleMap map = GetMapFromFragment(Resource.Id.FragmentPhotoMap);
 			if (map == null)
 				throw new ApplicationException("Map handle not available.");
 
@@ -117,7 +119,7 @@ namespace PhotoMapper
 
 		private async void HandleGoToCurrentLocation()
 		{
-			GoogleMap map = GetMapFromFragment(Resource.Id.PhotoMapFragment);
+			GoogleMap map = GetMapFromFragment(Resource.Id.FragmentPhotoMap);
 			if (map == null)
 				throw new ApplicationException("Map handle not available.");
 
@@ -131,33 +133,33 @@ namespace PhotoMapper
 				}
 				else
 				{
-					this.DisplayMessage(Resource.String.NoCurrentLocationTitle, Resource.String.NoCurrentLocationMessage);
+					this.DisplayMessage(Resource.String.TitleNoCurrentLocation, Resource.String.MessageNoCurrentLocation);
 				}
 			}
 			else
 			{
-				this.DisplayMessage(Resource.String.NoGeoEnabledTitle, Resource.String.NoGeoEnabledMessage);
+				this.DisplayMessage(Resource.String.TitleNoGeoEnabled, Resource.String.MessageNoGeoEnabled);
 			}
 		}
 
 		private void HandleGoToAddress()
 		{
-			GoogleMap map = GetMapFromFragment(Resource.Id.PhotoMapFragment);
+			GoogleMap map = GetMapFromFragment(Resource.Id.FragmentPhotoMap);
 			if (map == null)
 				throw new ApplicationException("Map handle not available.");
 
 			var inputControl = new EditText(this);
 
 			new AlertDialog.Builder(this)
-				.SetTitle(Resource.String.AddressSearchTitle)
-				.SetMessage(Resource.String.AddressSearchMessage)
+				.SetTitle(Resource.String.TitleAddressSearch)
+				.SetMessage(Resource.String.MessageAddressSearch)
 				.SetView(inputControl)
-				.SetPositiveButton(Resource.String.Okay, (object sender, DialogClickEventArgs e) =>
+				.SetPositiveButton(Resource.String.ButtonOkay, (object sender, DialogClickEventArgs e) =>
 				{
 					if (!string.IsNullOrWhiteSpace(inputControl.Text))
 						ZoomToAddress(map, inputControl.Text, ZoomLevel);
 				})
-				.SetNegativeButton(Resource.String.Cancel, (object sender, DialogClickEventArgs e) =>
+				.SetNegativeButton(Resource.String.ButtonCancel, (object sender, DialogClickEventArgs e) =>
 				{
 				})
 				.Show();
@@ -168,7 +170,7 @@ namespace PhotoMapper
 			var picker = new MediaPicker(this);
 			if (!picker.PhotosSupported)
 			{
-				this.DisplayMessage(Resource.String.NoDeviceImageSupportTitle, Resource.String.NoDeviceImageSupportMessage);
+				this.DisplayMessage(Resource.String.TitleNoDeviceImageSupport, Resource.String.MessageNoDeviceImageSupport);
 				return;
 			}
 
@@ -204,7 +206,7 @@ namespace PhotoMapper
 			}
 			else // Location not found...
 			{
-				this.DisplayMessage(Resource.String.AddressNotFoundTitle, Resource.String.AddressNotFoundMessage);
+				this.DisplayMessage(Resource.String.TitleAddressNotFound, Resource.String.MessageAddressNotFound);
 			}
 		}
 
@@ -219,7 +221,7 @@ namespace PhotoMapper
 
 			if (_imageMarkers.Any(kvp => kvp.Value.ImagePath == imagePath)) // Image already mapped.
 			{
-				this.DisplayMessage(Resource.String.ImageAlreadyMappedTitle, Resource.String.ImageAlreadyMappedMessage);
+				this.DisplayMessage(Resource.String.TitleImageAlreadyMapped, Resource.String.MessageImageAlreadyMapped);
 			}
 			else // Map the image with a marker.
 			{
@@ -234,16 +236,16 @@ namespace PhotoMapper
 				else // No EXIF geo data present in image.
 				{
 					new AlertDialog.Builder(this)
-					.SetTitle(Resource.String.NoExifGeoDataInImageTitle)
-					.SetMessage(Resource.String.NoExifGeoDataInImagePrompt)
-					.SetPositiveButton(Resource.String.Okay, (object sender, DialogClickEventArgs e) =>
-					{
-						PlaceMovableImageMarker(map, imageUri, imagePath, zoom);
-					})
-					.SetNegativeButton(Resource.String.Cancel, (object sender, DialogClickEventArgs e) =>
-					{
-					})
-					.Show();
+						.SetTitle(Resource.String.TitleNoExifGeoDataInImage)
+						.SetMessage(Resource.String.PromptNoExifGeoDataInImage)
+						.SetPositiveButton(Resource.String.ButtonOkay, (object sender, DialogClickEventArgs e) =>
+						{
+							PlaceMovableImageMarker(map, imageUri, imagePath, zoom);
+						})
+							.SetNegativeButton(Resource.String.ButtonCancel, (object sender, DialogClickEventArgs e) =>
+						{
+						})
+						.Show();
 				}
 			}
 		}
@@ -269,12 +271,12 @@ namespace PhotoMapper
 				}
 				else
 				{
-					this.DisplayMessage(Resource.String.NoCurrentLocationTitle, Resource.String.NoCurrentLocationMessage);
+					this.DisplayMessage(Resource.String.TitleNoCurrentLocation, Resource.String.MessageNoCurrentLocation);
 				}
 			}
 			else
 			{
-				this.DisplayMessage(Resource.String.NoGeoEnabledTitle, Resource.String.NoGeoEnabledMessage);
+				this.DisplayMessage(Resource.String.TitleNoGeoEnabled, Resource.String.MessageNoGeoEnabled);
 			}
 		}
 		
@@ -287,14 +289,14 @@ namespace PhotoMapper
 				if (image != null && image.Location != marker.Position)
 				{
 					new AlertDialog.Builder(this)
-						.SetTitle(Resource.String.SetImageLocationTitle)
-						.SetMessage(Resource.String.SetImageLocationPrompt)
-						.SetPositiveButton(Resource.String.Okay, (object eventSender, DialogClickEventArgs eventArgs) =>
+						.SetTitle(Resource.String.TitleSetImageLocation)
+						.SetMessage(Resource.String.PromptSetImageLocation)
+						.SetPositiveButton(Resource.String.ButtonOkay, (object eventSender, DialogClickEventArgs eventArgs) =>
 						{
 							if (!ImageService.SetImageLocation(image.ImagePath, marker.Position))
-								this.DisplayMessage(Resource.String.SetImageLocationFailedTitle, Resource.String.SetImageLocationFailedMessage);
+								this.DisplayMessage(Resource.String.TitleSetImageLocationFailed, Resource.String.MessageSetImageLocationFailed);
 						})
-						.SetNegativeButton(Resource.String.Cancel, (object eventSender, DialogClickEventArgs eventArgs) =>
+						.SetNegativeButton(Resource.String.ButtonCancel, (object eventSender, DialogClickEventArgs eventArgs) =>
 						{
 						})
 						.Show();

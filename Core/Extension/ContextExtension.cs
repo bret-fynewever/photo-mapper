@@ -15,7 +15,7 @@ namespace PhotoMapper.Core.Extension
 			new AlertDialog.Builder(context)
 				.SetTitle(title)
 				.SetMessage(message)
-				.SetPositiveButton(Resource.String.Okay, (object sender, DialogClickEventArgs e) => { })
+				.SetPositiveButton(Resource.String.ButtonOkay, (object sender, DialogClickEventArgs e) => { })
 				.Show();
 		}
 
@@ -27,7 +27,7 @@ namespace PhotoMapper.Core.Extension
 			new AlertDialog.Builder(context)
 				.SetTitle(title)
 				.SetMessage(message)
-				.SetPositiveButton(Resource.String.Okay, (object sender, DialogClickEventArgs e) => { })
+				.SetPositiveButton(Resource.String.ButtonOkay, (object sender, DialogClickEventArgs e) => { })
 				.Show();
 		}
 
@@ -39,7 +39,7 @@ namespace PhotoMapper.Core.Extension
 			new AlertDialog.Builder(context)
 				.SetTitle(title)
 				.SetMessage(message)
-				.SetPositiveButton(Resource.String.Okay, (object sender, DialogClickEventArgs e) => { })
+				.SetPositiveButton(Resource.String.ButtonOkay, (object sender, DialogClickEventArgs e) => { })
 				.Show();
 		}
 
@@ -51,7 +51,7 @@ namespace PhotoMapper.Core.Extension
 			new AlertDialog.Builder(context)
 				.SetTitle(title)
 				.SetMessage(message)
-				.SetPositiveButton(Resource.String.Okay, (object sender, DialogClickEventArgs e) => { })
+				.SetPositiveButton(Resource.String.ButtonOkay, (object sender, DialogClickEventArgs e) => { })
 				.Show();
 		}
 			}
