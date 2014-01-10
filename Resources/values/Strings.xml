@@ -27,5 +27,6 @@
 	<string name="ErrorSystem">System Error</string>
 	<string name="ButtonOkay">OK</string>
 	<string name="ButtonCancel">Cancel</string>
-	<string name="EditTextHintLocation">Location</string>
+	<string name="ButtonGoToLocation">Go To</string>
+	<string name="EditTextHintLocation">Enter Location</string>
 </resources>

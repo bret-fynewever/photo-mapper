@@ -20,6 +20,7 @@ using Xamarin.Media;
 using PhotoMapper.Core.Service;
 using PhotoMapper.Core.Extension;
 using PhotoMapper.Core.Model;
+using Android.Views.InputMethods;
 
 namespace PhotoMapper
 {
@@ -80,12 +81,18 @@ namespace PhotoMapper
 //				HandleGoToCurrentLocation();
 //			};
 
-			Button buttonGoToAddress = FindViewById<Button>(Resource.Id.ButtonGoToAddress);
-			buttonGoToAddress.Click += (object sender, EventArgs e) =>
+//			Button buttonGoToAddress = FindViewById<Button>(Resource.Id.ButtonGoToAddress);
+//			buttonGoToAddress.Click += (object sender, EventArgs e) =>
+//			{
+//				HandleGoToAddress();
+//			};
+
+			Button buttonGoToLocation = FindViewById<Button>(Resource.Id.ButtonGoToLocation);
+			buttonGoToLocation.Click += (object sender, EventArgs e) =>
 			{
-				HandleGoToAddress();
+				HandleGoToLocation();
 			};
-			
+
 			Button buttonMapImage = FindViewById<Button>(Resource.Id.ButtonMapImage);
 			buttonMapImage.Click += (object sender, EventArgs e) =>
 			{
@@ -163,6 +170,22 @@ namespace PhotoMapper
 				{
 				})
 				.Show();
+		}
+
+		private void HandleGoToLocation()
+		{
+			GoogleMap map = GetMapFromFragment(Resource.Id.FragmentPhotoMap);
+			if (map == null)
+				throw new ApplicationException("Map handle not available.");
+
+			EditText editTextLocation =  FindViewById<EditText>(Resource.Id.EditTextLocation);
+			string location = editTextLocation.Text.Trim();
+			if (!string.IsNullOrEmpty(location))
+				ZoomToAddress(map, location, ZoomLevel);
+
+			// Hide the soft keyboard.
+			InputMethodManager inputMethodManager = (InputMethodManager)GetSystemService(Context.InputMethodService);
+			inputMethodManager.HideSoftInputFromWindow(CurrentFocus.WindowToken, HideSoftInputFlags.NotAlways);
 		}
 
 		private void HandleMapImage()

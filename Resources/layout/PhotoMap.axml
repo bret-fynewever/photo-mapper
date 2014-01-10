@@ -3,21 +3,21 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
+<!--    <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <!--        <Button
+        <Button
             android:id="@+id/ButtonGoToCurrentLocation"
             android:text="@string/ButtonGoToCurrentLocation"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />-->
+            android:layout_height="wrap_content" />
         <Button
             android:id="@+id/ButtonGoToAddress"
             android:text="@string/ButtonGoToAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </LinearLayout>
+    </LinearLayout>-->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -25,9 +25,27 @@
         <Button
             android:id="@+id/ButtonMapImage"
             android:text="@string/ButtonMapImage"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/ButtonGoToLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/ButtonGoToLocation" />
+        <EditText
+            android:id="@+id/EditTextLocation"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/ButtonGoToLocation"
+            android:inputType="text"
+            android:hint="@string/EditTextHintLocation" />
+    </RelativeLayout>
     <fragment
         android:id="@+id/FragmentPhotoMap"
         class="com.google.android.gms.maps.MapFragment"

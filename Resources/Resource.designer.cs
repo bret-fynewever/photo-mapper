@@ -238,17 +238,20 @@ namespace PhotoMapper
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f050008
-			public const int ButtonGoToAddress = 2131034120;
-			
 			// aapt resource value: 0x7f050009
-			public const int ButtonMapImage = 2131034121;
+			public const int ButtonGoToLocation = 2131034121;
+			
+			// aapt resource value: 0x7f050008
+			public const int ButtonMapImage = 2131034120;
 			
 			// aapt resource value: 0x7f050005
 			public const int ButtonShowMap = 2131034117;
 			
 			// aapt resource value: 0x7f05000a
-			public const int FragmentPhotoMap = 2131034122;
+			public const int EditTextLocation = 2131034122;
+			
+			// aapt resource value: 0x7f05000b
+			public const int FragmentPhotoMap = 2131034123;
 			
 			// aapt resource value: 0x7f050006
 			public const int ImageViewMappedImage = 2131034118;
@@ -318,6 +321,9 @@ namespace PhotoMapper
 			// aapt resource value: 0x7f06001c
 			public const int ButtonGoToCurrentLocation = 2131099676;
 			
+			// aapt resource value: 0x7f060034
+			public const int ButtonGoToLocation = 2131099700;
+			
 			// aapt resource value: 0x7f06001b
 			public const int ButtonMapImage = 2131099675;
 			
@@ -327,8 +333,8 @@ namespace PhotoMapper
 			// aapt resource value: 0x7f06001a
 			public const int ButtonShowMap = 2131099674;
 			
-			// aapt resource value: 0x7f060034
-			public const int EditTextHintLocation = 2131099700;
+			// aapt resource value: 0x7f060035
+			public const int EditTextHintLocation = 2131099701;
 			
 			// aapt resource value: 0x7f060031
 			public const int ErrorSystem = 2131099697;
