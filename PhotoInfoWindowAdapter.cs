@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
+using Android.Graphics;
 using Android.Views;
 using Android.Widget;
 using Android.Content;
 using Android.App;
 using PhotoMapper.Core.Model;
-using Android.Graphics;
-using Java.IO;
+using PhotoMapper.Core.Service;
 
 namespace PhotoMapper
 {
@@ -25,6 +25,17 @@ namespace PhotoMapper
 			_imageMarkers = imageMarkers;
 		}
 
+		#region Services
+
+		private IImageService _imageService = null;
+		public IImageService ImageService
+		{
+			get { return _imageService ?? (_imageService = new ImageService()); }
+			set { _imageService = value; }
+		}
+
+		#endregion
+
 		#region IInfoWindowAdapter implementation
 
 		public View GetInfoContents(Marker p0)
@@ -36,7 +47,7 @@ namespace PhotoMapper
 				var image = _imageMarkers[p0.Id];
 				if (image != null)
 				{
-					Bitmap thumbnail = GetThumbnail(image.ImagePath);
+					Bitmap thumbnail = ImageService.GetThumbnail(image.ImagePath, ThumbnailSize);
 					if (thumbnail != null)
 					{
 						ImageView imageView = (ImageView)view.FindViewById(Resource.Id.ImageViewMappedImage);
@@ -54,24 +65,6 @@ namespace PhotoMapper
 		public View GetInfoWindow(Marker p0)
 		{
 			return null;
-		}
-
-		private Bitmap GetThumbnail(string imagePath)
-		{
-			BitmapFactory.Options bounds = new BitmapFactory.Options();
-			bounds.InJustDecodeBounds = true;
-
-			BitmapFactory.DecodeFile(imagePath, bounds);
-
-			if ((bounds.OutWidth == -1) || (bounds.OutHeight == -1))
-				return null;
-
-			int originalSize = (bounds.OutHeight > bounds.OutWidth) ? bounds.OutHeight : bounds.OutWidth;
-
-			BitmapFactory.Options options = new BitmapFactory.Options();
-			options.InSampleSize = originalSize / ThumbnailSize;
-
-			return BitmapFactory.DecodeFile(imagePath, options);
 		}
 
 		#endregion

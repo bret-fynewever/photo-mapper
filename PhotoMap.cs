@@ -42,7 +42,7 @@ namespace PhotoMapper
 		private IImageService _imageService = null;
 		public IImageService ImageService
 		{
-			get { return _imageService ?? (_imageService = new ImageService(this)); }
+			get { return _imageService ?? (_imageService = new ImageService()); }
 			set { _imageService = value; }
 		}
 
@@ -217,7 +217,7 @@ namespace PhotoMapper
 			if (imageUri == null)
 				throw new ArgumentNullException("imageUri");
 
-			string imagePath = ImageService.GetImagePath(imageUri);
+			string imagePath = ImageService.GetImagePath(imageUri, this);
 
 			if (_imageMarkers.Any(kvp => kvp.Value.ImagePath == imagePath)) // Image already mapped.
 			{

@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Android.App;
 using Android.Gms.Maps.Model;
+using Android.Graphics;
 using Android.Database;
 using Android.Media;
 using Android.Util;
@@ -12,17 +13,8 @@ namespace PhotoMapper.Core.Service
 	public class ImageService : IImageService
 	{
 		private const string _logTag = "PhotoMapper.Core.Service.ImageService";
-		private Activity _activity = null;
 
-		public ImageService(Activity activity)
-		{
-			if (activity == null)
-				throw new ArgumentNullException("activity");
-
-			_activity = activity;
-		}
-
-		public string GetImagePath(Android.Net.Uri uri)
+		public string GetImagePath(Android.Net.Uri uri, Activity activity)
 		{
 			if (uri == null)
 				throw new ArgumentNullException("uri");
@@ -31,7 +23,7 @@ namespace PhotoMapper.Core.Service
 
 			// The projection contains the columns we want to return in our query.
 			string[] projection = new[] { Android.Provider.MediaStore.Images.Media.InterfaceConsts.Data };
-			using (ICursor cursor = _activity.ManagedQuery(uri, projection, null, null, null))
+			using (ICursor cursor = activity.ManagedQuery(uri, projection, null, null, null))
 			{
 				if (cursor != null)
 				{
@@ -93,6 +85,35 @@ namespace PhotoMapper.Core.Service
 			}
 
 			return success;
+		}
+
+		public Bitmap GetThumbnail(string imagePath, int thumbnailSize)
+		{
+			Bitmap thumbnail = null;
+
+			try
+			{
+				BitmapFactory.Options bounds = new BitmapFactory.Options();
+				bounds.InJustDecodeBounds = true;
+
+				BitmapFactory.DecodeFile(imagePath, bounds);
+
+				if ((bounds.OutWidth == -1) || (bounds.OutHeight == -1))
+					return null;
+
+				int maxOriginalDimension = (bounds.OutHeight > bounds.OutWidth) ? bounds.OutHeight : bounds.OutWidth;
+
+				BitmapFactory.Options options = new BitmapFactory.Options();
+				options.InSampleSize = maxOriginalDimension / thumbnailSize;
+
+				thumbnail = BitmapFactory.DecodeFile(imagePath, options);
+			}
+			catch (Exception exc)
+			{
+				Log.Error(_logTag, exc.Message);
+			}
+
+			return thumbnail;
 		}
 	}
 }
