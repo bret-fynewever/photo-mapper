@@ -1,4 +1,4 @@
-photo-mapper-android
-====================
+photo-mapper
+============
 
-Xamarin image mapping application for Android
+Xamarin image mapping application for Android and iOS
