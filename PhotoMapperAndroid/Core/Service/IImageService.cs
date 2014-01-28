@@ -3,7 +3,7 @@ using Android.App;
 using Android.Gms.Maps.Model;
 using Android.Graphics;
 
-namespace PhotoMapper.Core.Service
+namespace PhotoMapperAndroid.Core.Service
 {
 	public interface IImageService
 	{

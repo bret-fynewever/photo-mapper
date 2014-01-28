@@ -2,7 +2,7 @@ using System;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 
-namespace PhotoMapper.Core.Extension
+namespace PhotoMapperAndroid.Core.Extension
 {
 	public static class MapExtension
 	{

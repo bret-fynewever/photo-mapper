@@ -6,9 +6,9 @@ using Android.Graphics;
 using Android.Database;
 using Android.Media;
 using Android.Util;
-using PhotoMapper.Core.Extension;
+using PhotoMapperAndroid.Core.Extension;
 
-namespace PhotoMapper.Core.Service
+namespace PhotoMapperAndroid.Core.Service
 {
 	public class ImageService : IImageService
 	{

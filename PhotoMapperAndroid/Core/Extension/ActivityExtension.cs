@@ -2,7 +2,7 @@ using System;
 using Android.App;
 using Android.Content;
 
-namespace PhotoMapper.Core.Extension
+namespace PhotoMapperAndroid.Core.Extension
 {
 	public static class ActivityExtension
 	{

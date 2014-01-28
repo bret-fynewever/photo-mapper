@@ -1,6 +1,6 @@
 using System;
 
-namespace PhotoMapper.Core.Extension
+namespace PhotoMapperAndroid.Core.Extension
 {
 	public static class DoubleExtension
 	{

@@ -13,9 +13,9 @@ using Android.Locations;
 using Android.Gms.Maps.Model;
 using Android.Util;
 using Xamarin.Geolocation;
-using PhotoMapper.Core.Extension;
+using PhotoMapperAndroid.Core.Extension;
 
-namespace PhotoMapper.Core.Service
+namespace PhotoMapperAndroid.Core.Service
 {
 	public class GeoLocationService : IGeoLocationService
 	{

@@ -6,9 +6,9 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 
-namespace PhotoMapper
+namespace PhotoMapperAndroid
 {
-	[Activity(Label = "PhotoMapper", MainLauncher = true)]
+	[Activity(Label = "PhotoMapperAndroid", MainLauncher = true)]
 	public class MainActivity : Activity
 	{
 		protected override void OnCreate(Bundle bundle)

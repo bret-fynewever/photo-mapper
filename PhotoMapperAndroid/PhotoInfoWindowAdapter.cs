@@ -7,10 +7,10 @@ using Android.Views;
 using Android.Widget;
 using Android.Content;
 using Android.App;
-using PhotoMapper.Core.Model;
-using PhotoMapper.Core.Service;
+using PhotoMapperAndroid.Core.Model;
+using PhotoMapperAndroid.Core.Service;
 
-namespace PhotoMapper
+namespace PhotoMapperAndroid
 {
 	public class PhotoInfoWindowAdapter : Java.Lang.Object, GoogleMap.IInfoWindowAdapter
 	{

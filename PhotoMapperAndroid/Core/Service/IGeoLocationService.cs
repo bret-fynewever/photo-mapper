@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Android.Gms.Maps.Model;
 using Android.Locations;
 
-namespace PhotoMapper.Core.Service
+namespace PhotoMapperAndroid.Core.Service
 {
 	public interface IGeoLocationService
 	{

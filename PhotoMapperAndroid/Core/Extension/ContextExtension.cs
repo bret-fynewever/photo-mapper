@@ -1,9 +1,8 @@
 using System;
 using Android.Content;
 using Android.App;
-using PhotoMapper;
 
-namespace PhotoMapper.Core.Extension
+namespace PhotoMapperAndroid.Core.Extension
 {
 	public static class ContextExtension
 	{

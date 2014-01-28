@@ -15,14 +15,14 @@ using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.Locations;
 using Android.Media;
+using Android.Views.InputMethods;
 using Xamarin.Geolocation;
 using Xamarin.Media;
-using PhotoMapper.Core.Service;
-using PhotoMapper.Core.Extension;
-using PhotoMapper.Core.Model;
-using Android.Views.InputMethods;
+using PhotoMapperAndroid.Core.Service;
+using PhotoMapperAndroid.Core.Extension;
+using PhotoMapperAndroid.Core.Model;
 
-namespace PhotoMapper
+namespace PhotoMapperAndroid
 {
 	[Activity(Label = "PhotoMap")]			
 	public class PhotoMap : Activity

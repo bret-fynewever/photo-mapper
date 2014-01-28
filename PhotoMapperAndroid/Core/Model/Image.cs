@@ -1,7 +1,7 @@
 using System;
 using Android.Gms.Maps.Model;
 
-namespace PhotoMapper.Core.Model
+namespace PhotoMapperAndroid.Core.Model
 {
 	public class Image
 	{
