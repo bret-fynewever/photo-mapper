@@ -3,16 +3,52 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoMapperAndroid", "PhotoMapperAndroid\PhotoMapperAndroid.csproj", "{72711466-D076-4709-AD50-AC56AE2FEA1E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoMapperIOS", "PhotoMapperIOS\PhotoMapperIOS.csproj", "{34816050-76F2-49FE-9A9D-7F593E4ADB80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Release|iPhone = Release|iPhone
+		Ad-Hoc|iPhone = Ad-Hoc|iPhone
+		AppStore|iPhone = AppStore|iPhone
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{34816050-76F2-49FE-9A9D-7F593E4ADB80}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
+		{34816050-76F2-49FE-9A9D-7F593E4ADB80}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
+		{34816050-76F2-49FE-9A9D-7F593E4ADB80}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
+		{34816050-76F2-49FE-9A9D-7F593E4ADB80}.AppStore|iPhone.Build.0 = AppStore|iPhone
+		{34816050-76F2-49FE-9A9D-7F593E4ADB80}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{34816050-76F2-49FE-9A9D-7F593E4ADB80}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{34816050-76F2-49FE-9A9D-7F593E4ADB80}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{34816050-76F2-49FE-9A9D-7F593E4ADB80}.Debug|iPhone.Build.0 = Debug|iPhone
+		{34816050-76F2-49FE-9A9D-7F593E4ADB80}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{34816050-76F2-49FE-9A9D-7F593E4ADB80}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{34816050-76F2-49FE-9A9D-7F593E4ADB80}.Release|Any CPU.ActiveCfg = Release|iPhoneSimulator
+		{34816050-76F2-49FE-9A9D-7F593E4ADB80}.Release|Any CPU.Build.0 = Release|iPhoneSimulator
+		{34816050-76F2-49FE-9A9D-7F593E4ADB80}.Release|iPhone.ActiveCfg = Release|iPhone
+		{34816050-76F2-49FE-9A9D-7F593E4ADB80}.Release|iPhone.Build.0 = Release|iPhone
+		{34816050-76F2-49FE-9A9D-7F593E4ADB80}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{34816050-76F2-49FE-9A9D-7F593E4ADB80}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{72711466-D076-4709-AD50-AC56AE2FEA1E}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
+		{72711466-D076-4709-AD50-AC56AE2FEA1E}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
+		{72711466-D076-4709-AD50-AC56AE2FEA1E}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
+		{72711466-D076-4709-AD50-AC56AE2FEA1E}.AppStore|iPhone.Build.0 = Debug|Any CPU
 		{72711466-D076-4709-AD50-AC56AE2FEA1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{72711466-D076-4709-AD50-AC56AE2FEA1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72711466-D076-4709-AD50-AC56AE2FEA1E}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{72711466-D076-4709-AD50-AC56AE2FEA1E}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{72711466-D076-4709-AD50-AC56AE2FEA1E}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{72711466-D076-4709-AD50-AC56AE2FEA1E}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{72711466-D076-4709-AD50-AC56AE2FEA1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72711466-D076-4709-AD50-AC56AE2FEA1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72711466-D076-4709-AD50-AC56AE2FEA1E}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{72711466-D076-4709-AD50-AC56AE2FEA1E}.Release|iPhone.Build.0 = Release|Any CPU
+		{72711466-D076-4709-AD50-AC56AE2FEA1E}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{72711466-D076-4709-AD50-AC56AE2FEA1E}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = PhotoMapperAndroid\PhotoMapperAndroid.csproj
