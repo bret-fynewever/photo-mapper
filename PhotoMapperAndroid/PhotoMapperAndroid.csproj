@@ -45,10 +45,10 @@
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
     <Reference Include="GooglePlayServicesLib">
-      <HintPath>Components\googleplayservices12-12.0.0\lib\android\GooglePlayServicesLib.dll</HintPath>
+      <HintPath>..\Components\googleplayservices12-12.0.0\lib\android\GooglePlayServicesLib.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Mobile">
-      <HintPath>Components\xamarin.mobile-0.7\lib\android\Xamarin.Mobile.dll</HintPath>
+      <HintPath>..\Components\xamarin.mobile-0.7\lib\android\Xamarin.Mobile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -81,19 +81,21 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
-    <XamarinComponentReference Include="googleplayservices12">
-      <Version>12.0.0</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
-    <XamarinComponentReference Include="xamarin.mobile">
-      <Version>0.7</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Core\" />
     <Folder Include="Core\Extension\" />
     <Folder Include="Core\Service\" />
     <Folder Include="Core\Model\" />
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="googleplayservices12">
+      <InstallationInProgress>True</InstallationInProgress>
+      <Version>12.0.0</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
+    <XamarinComponentReference Include="xamarin.mobile">
+      <InstallationInProgress>True</InstallationInProgress>
+      <Version>0.7</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
   </ItemGroup>
 </Project>
