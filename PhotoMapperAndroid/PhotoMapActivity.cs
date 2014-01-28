@@ -24,8 +24,8 @@ using PhotoMapperAndroid.Core.Model;
 
 namespace PhotoMapperAndroid
 {
-	[Activity(Label = "PhotoMap")]			
-	public class PhotoMap : Activity
+	[Activity(Label = "PhotoMapActivity")]			
+	public class PhotoMapActivity : Activity
 	{
 		private const int ZoomLevel = 15;
 		private const int SelectImageCode = 1000;

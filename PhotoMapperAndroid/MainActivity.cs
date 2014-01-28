@@ -22,7 +22,7 @@ namespace PhotoMapperAndroid
 			Button showMapButton = FindViewById<Button>(Resource.Id.ButtonShowMap);
 			showMapButton.Click += delegate
 			{
-				StartActivity(typeof(PhotoMap));
+				StartActivity(typeof(PhotoMapActivity));
 			};
 		}
 	}
